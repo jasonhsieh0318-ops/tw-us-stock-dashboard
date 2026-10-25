@@ -49,11 +49,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       scroll-behavior: smooth;
     }
 
-    body {
+    html, body {
       background-color: var(--bg-primary);
       color: var(--text-primary);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", "Microsoft JhengHei", sans-serif;
       line-height: 1.5;
+      overflow-x: hidden;
+      max-width: 100vw;
+      -webkit-tap-highlight-color: transparent;
     }
 
     /* Top Header */
@@ -62,22 +65,23 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       top: 0;
       left: 0;
       right: 0;
-      height: 68px;
+      min-height: 68px;
       z-index: 120;
-      background: rgba(11, 15, 23, 0.94);
+      background: rgba(11, 15, 23, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 0 24px;
+      padding: 8px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      min-width: 0;
     }
 
     .sidebar-toggle-btn {
@@ -93,6 +97,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       justify-content: center;
       font-size: 17px;
       transition: all 0.15s;
+      flex-shrink: 0;
     }
 
     .sidebar-toggle-btn:hover {
@@ -101,28 +106,27 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
 
     .brand-badge {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 9px;
       background: linear-gradient(135deg, #38bdf8, #6366f1);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 16px;
+      font-size: 15px;
       color: #fff;
       box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+      flex-shrink: 0;
     }
 
     .brand h1 {
       font-size: 18px;
       font-weight: 700;
       letter-spacing: 0.3px;
-    }
-
-    .brand-sub {
-      font-size: 11.5px;
-      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Main Page Switcher in Topbar */
@@ -146,7 +150,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 5px;
       transition: all 0.18s;
       white-space: nowrap;
     }
@@ -165,8 +170,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .meta-bar {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .pill {
@@ -199,6 +205,21 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       display: flex;
       padding-top: 68px;
       min-height: 100vh;
+      max-width: 100vw;
+    }
+
+    /* Mobile Sidebar Backdrop */
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.65);
+      backdrop-filter: blur(3px);
+      z-index: 140;
+    }
+
+    body.sidebar-open-mobile .sidebar-backdrop {
+      display: block;
     }
 
     /* Left Sidebar Menu */
@@ -212,7 +233,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border-right: 1px solid var(--border);
       padding: 16px 12px 28px;
       overflow-y: auto;
-      z-index: 110;
+      z-index: 150;
       display: flex;
       flex-direction: column;
       gap: 18px;
@@ -308,6 +329,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     /* Main Content Container */
     .main-area {
       flex: 1;
+      min-width: 0;
       margin-left: var(--sidebar-width);
       padding: 22px 26px 64px;
       max-width: calc(100vw - var(--sidebar-width));
@@ -319,26 +341,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       max-width: 100vw;
     }
 
-    @media (max-width: 1024px) {
-      .left-sidebar {
-        transform: translateX(-100%);
-      }
-      body.sidebar-open-mobile .left-sidebar {
-        transform: translateX(0);
-      }
-      .main-area {
-        margin-left: 0;
-        max-width: 100vw;
-      }
-      .page-switcher {
-        display: none;
-      }
-    }
-
     .page-view {
       display: none;
       flex-direction: column;
       gap: 24px;
+      min-width: 0;
+      max-width: 100%;
     }
 
     .page-view.active {
@@ -346,7 +354,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
 
     section[id] {
-      scroll-margin-top: 84px;
+      scroll-margin-top: 90px;
     }
 
     /* KPI Grid */
@@ -354,6 +362,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
       gap: 16px;
+      min-width: 0;
     }
 
     .kpi-card {
@@ -367,6 +376,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       gap: 10px;
       position: relative;
       overflow: hidden;
+      min-width: 0;
     }
 
     .kpi-card::before {
@@ -390,6 +400,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 6px;
+      min-width: 0;
     }
 
     .kpi-value {
@@ -397,6 +409,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-weight: 800;
       font-variant-numeric: tabular-nums;
       letter-spacing: -0.5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .kpi-change {
@@ -408,7 +423,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 3px 9px;
       border-radius: 6px;
       width: fit-content;
+      max-width: 100%;
       font-variant-numeric: tabular-nums;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .kpi-foot {
@@ -416,6 +435,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: var(--text-muted);
       display: flex;
       justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       padding-top: 8px;
     }
@@ -433,6 +454,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 22px 24px;
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
     }
 
     .card-header {
@@ -449,9 +473,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .card-title {
       display: flex;
       align-items: center;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
       font-size: 17px;
       font-weight: 700;
+      min-width: 0;
     }
 
     .section-tag {
@@ -462,24 +488,34 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background: rgba(56, 189, 248, 0.15);
       color: var(--accent);
       text-transform: uppercase;
+      flex-shrink: 0;
     }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
       gap: 20px;
+      min-width: 0;
+    }
+
+    .grid-2 > *, .grid-3 > * {
+      min-width: 0;
+      max-width: 100%;
     }
 
     .grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
       gap: 20px;
+      min-width: 0;
     }
 
-    @media (max-width: 768px) {
-      .grid-2, .grid-3 {
-        grid-template-columns: 1fr;
-      }
+    .inst-bar-row {
+      display: grid;
+      grid-template-columns: 185px 1fr 95px;
+      align-items: center;
+      gap: 12px;
+      font-size: 12.5px;
     }
 
     /* Tabs & Controls */
@@ -491,15 +527,16 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 3px;
       gap: 3px;
       flex-wrap: wrap;
+      max-width: 100%;
     }
 
     .tab-btn {
       background: transparent;
       border: none;
       color: var(--text-secondary);
-      padding: 6px 13px;
+      padding: 6px 12px;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s;
@@ -518,7 +555,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 7px 13px;
       border-radius: 8px;
       font-size: 13px;
-      min-width: 210px;
+      min-width: 180px;
+      max-width: 100%;
       outline: none;
     }
 
@@ -549,8 +587,134 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
     .timeline-slider {
       accent-color: #10b981;
-      width: 160px;
+      width: 150px;
+      max-width: 100%;
       cursor: pointer;
+    }
+
+    /* Tablet & Mobile Responsive Rules */
+    @media (max-width: 1024px) {
+      .topbar {
+        flex-wrap: wrap;
+        padding: 8px 14px;
+        gap: 8px;
+      }
+      .left-sidebar {
+        top: 0;
+        padding-top: 20px;
+        transform: translateX(-100%);
+        box-shadow: 8px 0 32px rgba(0, 0, 0, 0.65);
+      }
+      body.sidebar-open-mobile .left-sidebar {
+        transform: translateX(0);
+      }
+      .main-area {
+        margin-left: 0;
+        max-width: 100vw;
+        padding: 16px 14px 56px;
+      }
+      .app-shell {
+        padding-top: 108px;
+      }
+      section[id] {
+        scroll-margin-top: 116px;
+      }
+      .page-switcher {
+        order: 3;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+      }
+      .page-tab-btn {
+        padding: 7px 6px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .brand h1 {
+        font-size: 15px;
+      }
+      .brand-badge {
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+      }
+      .meta-updated-pill {
+        display: none;
+      }
+      .pill {
+        font-size: 11px;
+        padding: 4px 9px;
+      }
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .kpi-card {
+        padding: 13px 12px;
+        gap: 6px;
+        border-radius: 12px;
+      }
+      .kpi-title {
+        font-size: 11.5px;
+      }
+      .kpi-value {
+        font-size: 19px;
+      }
+      .kpi-change {
+        font-size: 11.5px;
+        padding: 2px 7px;
+      }
+      .kpi-foot {
+        font-size: 10.5px;
+        padding-top: 6px;
+      }
+      .card {
+        padding: 14px 12px;
+        border-radius: 13px;
+      }
+      .card-header {
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        gap: 8px;
+      }
+      .card-title {
+        font-size: 15px;
+      }
+      .treemap-wrapper {
+        height: 440px !important;
+      }
+      .rotation-box {
+        height: 460px !important;
+      }
+      .inst-bar-row {
+        grid-template-columns: 108px 1fr 74px;
+        gap: 8px;
+        font-size: 11.5px;
+      }
+      .search-input {
+        width: 100%;
+      }
+      thead th, tbody td {
+        padding: 8px 9px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+      .page-tab-btn {
+        font-size: 11px;
+        padding: 6px 4px;
+      }
     }
 
     /* Treemap Styles */
@@ -796,7 +960,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     <div class="brand">
       <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="收合/展開左側選單">☰</button>
       <div class="brand-badge">TW</div>
-      <div>
+      <div style="min-width:0;">
         <h1>台股與國際金融每日盤後儀表板</h1>
       </div>
     </div>
@@ -807,7 +971,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         📊 每日盤後總覽
       </button>
       <button class="page-tab-btn" id="btn-page-sectors" onclick="switchMainPage('sectors')">
-        🔥 概念族群資金輪動與熱力圖
+        🔥 族群輪動與熱力圖
       </button>
       <button class="page-tab-btn" id="btn-page-global" onclick="switchMainPage('global')">
         🌎 國際金融頁面
@@ -815,13 +979,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     </div>
 
     <div class="meta-bar">
-      <span class="pill"><span class="dot-live"></span> 台股交易日：<strong id="meta-twse-date">--</strong></span>
-      <span class="pill">最後更新：<strong id="meta-updated-at">--</strong></span>
+      <span class="pill"><span class="dot-live"></span> 交易日：<strong id="meta-twse-date">--</strong></span>
+      <span class="pill meta-updated-pill">最後更新：<strong id="meta-updated-at">--</strong></span>
     </div>
   </header>
 
   <!-- App Shell: Left Sidebar + Main Content -->
   <div class="app-shell">
+
+    <div class="sidebar-backdrop" onclick="document.body.classList.remove('sidebar-open-mobile')"></div>
 
     <!-- Left Sidebar Navigation Menu -->
     <aside class="left-sidebar" id="left-sidebar">
@@ -1425,15 +1591,27 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       return `<span class="${cls}">${r}</span>`;
     }
 
+    function redrawActivePageCharts() {
+      if (currentMainPage === 'sectors') {
+        renderTreemap();
+        renderRotationChart();
+      } else if (currentMainPage === 'global') {
+        renderGlobalMarketsPage();
+      } else {
+        renderTaiexSection();
+        renderTxfNightSection();
+      }
+    }
+
     function toggleSidebar() {
       if (window.innerWidth <= 1024) {
         document.body.classList.toggle('sidebar-open-mobile');
       } else {
         document.body.classList.toggle('sidebar-collapsed');
+        setTimeout(() => {
+          redrawActivePageCharts();
+        }, 240);
       }
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-      }, 240);
     }
 
     function navigateToSection(page, sectionId, linkBtn) {
@@ -1470,6 +1648,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       document.getElementById('btn-page-overview').classList.toggle('active', page === 'overview');
       document.getElementById('btn-page-sectors').classList.toggle('active', page === 'sectors');
       document.getElementById('btn-page-global').classList.toggle('active', page === 'global');
+
+      if (window.innerWidth <= 1024) {
+        document.body.classList.remove('sidebar-open-mobile');
+      }
 
       if (updateSidebarDefault) {
         document.querySelectorAll('.sidebar-link').forEach(b => b.classList.remove('active'));
@@ -1762,8 +1944,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       }
 
       const rect = container.getBoundingClientRect();
-      const W = Math.max(rect.width, 360);
-      const H = Math.max(rect.height, 580);
+      const W = Math.max(rect.width, 250);
+      const H = Math.max(rect.height, 420);
+      const isMobile = W < 500;
 
       const boxes = computeTreemapLayout(sectors, 0, 0, W, H);
       container.innerHTML = boxes.map(b => {
@@ -1772,8 +1955,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         const textDark = (s.avg_change_pct > -1.0 && s.avg_change_pct < 1.2 && s.avg_change_pct !== 0);
         const textColor = textDark ? '#0b1727' : '#ffffff';
         const minSide = Math.min(b.w, b.h);
-        const nameFont = Math.max(10, Math.min(26, Math.floor(minSide * 0.165)));
-        const pctFont = Math.max(9.5, Math.min(24, Math.floor(minSide * 0.155)));
+        const maxNameFont = isMobile ? 15 : 26;
+        const maxPctFont = isMobile ? 14 : 24;
+        const nameFont = Math.max(9, Math.min(maxNameFont, Math.floor(minSide * 0.165)));
+        const pctFont = Math.max(8.5, Math.min(maxPctFont, Math.floor(minSide * 0.155)));
         const isSelected = s.id === selectedSectorId ? 'selected-node' : '';
         const signStr = s.avg_change_pct > 0 ? `+${s.avg_change_pct}%` : `${s.avg_change_pct}%`;
 
@@ -1811,23 +1996,28 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       document.getElementById('rot-total-days').textContent = dates.length;
 
       const rect = container.getBoundingClientRect();
-      const W = Math.max(rect.width, 400);
-      const H = Math.max(rect.height, 540);
-      const padL = 70, padR = 36, padT = 26, padB = 56;
+      const W = Math.max(rect.width, 260);
+      const H = Math.max(rect.height, 440);
+      const isMobile = W < 520;
+      const padL = isMobile ? 38 : 70;
+      const padR = isMobile ? 12 : 36;
+      const padT = isMobile ? 18 : 26;
+      const padB = isMobile ? 42 : 56;
       const plotW = W - padL - padR;
       const plotH = H - padT - padB;
 
-      const zeroX = padL + plotW * 0.67;
+      const zeroX = padL + plotW * 0.62;
       const zeroY = padT + plotH * 0.50;
 
       function mapX(xPct) {
         const v = Number(xPct || 0);
+        const edgePad = isMobile ? 14 : 25;
         if (v < 0) {
           const clamped = Math.max(-115, v);
-          return zeroX + (clamped / 115) * (zeroX - (padL + 25));
+          return zeroX + (clamped / 115) * (zeroX - (padL + edgePad));
         } else {
           const clamped = Math.min(440, v);
-          return zeroX + (clamped / 440) * ((W - padR - 25) - zeroX);
+          return zeroX + (clamped / 440) * ((W - padR - edgePad) - zeroX);
         }
       }
 
@@ -1843,39 +2033,41 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         <rect x="${zeroX}" y="${zeroY}" width="${W - padR - zeroX}" height="${H - padB - zeroY}" fill="#f6efe8" />
       `;
 
-      const yTicks = [350, 300, 200, 100, 0, -100, -200, -300, -350];
+      const yTicks = isMobile ? [350, 200, 0, -200, -350] : [350, 300, 200, 100, 0, -100, -200, -300, -350];
       yTicks.forEach(yt => {
         const py = mapY(yt);
         const isZero = yt === 0;
         gridSvg += `<line x1="${padL}" y1="${py}" x2="${W - padR}" y2="${py}" stroke="${isZero ? '#94a3b8' : '#e2e8f0'}" stroke-width="${isZero ? 1.6 : 1}" />`;
         const lbl = yt > 0 ? `+${yt}` : (yt === 0 ? '+0' : `${yt}`);
-        gridSvg += `<text x="${padL - 10}" y="${py + 4}" text-anchor="end" fill="#64748b" font-size="12.5" font-weight="600">${lbl}</text>`;
+        gridSvg += `<text x="${padL - 6}" y="${py + 4}" text-anchor="end" fill="#64748b" font-size="${isMobile ? '10' : '12.5'}" font-weight="600">${lbl}</text>`;
       });
 
       gridSvg += `<line x1="${zeroX}" y1="${padT}" x2="${zeroX}" y2="${H - padB}" stroke="#94a3b8" stroke-width="1.6" />`;
 
-      [-100, -50, 200, 428].forEach(xt => {
+      (isMobile ? [-100, 200, 428] : [-100, -50, 200, 428]).forEach(xt => {
         const px = mapX(xt);
         const lbl = xt > 0 ? `+${xt}%` : `${xt}%`;
-        gridSvg += `<line x1="${px}" y1="${zeroY}" x2="${px}" y2="${zeroY + 8}" stroke="#64748b" stroke-width="1.2" />`;
-        gridSvg += `<text x="${px}" y="${zeroY + 24}" text-anchor="middle" fill="#334155" font-size="13" font-weight="600">${lbl}</text>`;
+        gridSvg += `<line x1="${px}" y1="${zeroY}" x2="${px}" y2="${zeroY + 6}" stroke="#64748b" stroke-width="1.2" />`;
+        gridSvg += `<text x="${px}" y="${zeroY + (isMobile ? 18 : 24)}" text-anchor="middle" fill="#334155" font-size="${isMobile ? '10.5' : '13'}" font-weight="600">${lbl}</text>`;
       });
 
+      const qTitleSize = isMobile ? 14 : 20;
+      const qSubSize = isMobile ? 10.5 : 13.5;
       const quadLabelsSvg = `
-        <text x="${padL + 12}" y="${padT + 26}" fill="#6366f1" font-size="20" font-weight="800">觀望</text>
-        <text x="${padL + 12}" y="${padT + 46}" fill="#818cf8" font-size="13.5" font-weight="600">資金來但沒人接</text>
+        <text x="${padL + 8}" y="${padT + (isMobile ? 18 : 26)}" fill="#6366f1" font-size="${qTitleSize}" font-weight="800">觀望</text>
+        <text x="${padL + 8}" y="${padT + (isMobile ? 33 : 46)}" fill="#818cf8" font-size="${qSubSize}" font-weight="600">資金來但沒人接</text>
 
-        <text x="${W - padR - 12}" y="${padT + 26}" text-anchor="end" fill="#10b981" font-size="20" font-weight="800">主力加速流入 ★</text>
-        <text x="${W - padR - 12}" y="${padT + 46}" text-anchor="end" fill="#34d399" font-size="13.5" font-weight="600">錢正大力進場</text>
+        <text x="${W - padR - 8}" y="${padT + (isMobile ? 18 : 26)}" text-anchor="end" fill="#10b981" font-size="${qTitleSize}" font-weight="800">主力加速流入 ★</text>
+        <text x="${W - padR - 8}" y="${padT + (isMobile ? 33 : 46)}" text-anchor="end" fill="#34d399" font-size="${qSubSize}" font-weight="600">錢正大力進場</text>
 
-        <text x="${padL + 12}" y="${H - padB - 26}" fill="#ea580c" font-size="20" font-weight="800">退潮</text>
-        <text x="${padL + 12}" y="${H - padB - 8}" fill="#f97316" font-size="13.5" font-weight="600">資金流出，別追</text>
+        <text x="${padL + 8}" y="${H - padB - (isMobile ? 20 : 26)}" fill="#ea580c" font-size="${qTitleSize}" font-weight="800">退潮</text>
+        <text x="${padL + 8}" y="${H - padB - 6}" fill="#f97316" font-size="${qSubSize}" font-weight="600">資金流出，別追</text>
 
-        <text x="${W - padR - 12}" y="${H - padB - 26}" text-anchor="end" fill="#d97706" font-size="20" font-weight="800">輪動</text>
-        <text x="${W - padR - 12}" y="${H - padB - 8}" text-anchor="end" fill="#f59e0b" font-size="13.5" font-weight="600">熱度開始轉移</text>
+        <text x="${W - padR - 8}" y="${H - padB - (isMobile ? 20 : 26)}" text-anchor="end" fill="#d97706" font-size="${qTitleSize}" font-weight="800">輪動</text>
+        <text x="${W - padR - 8}" y="${H - padB - 6}" text-anchor="end" fill="#f59e0b" font-size="${qSubSize}" font-weight="600">熱度開始轉移</text>
 
-        <text x="${padL + 40}" y="${H - 16}" fill="#64748b" font-size="14" font-weight="700">← 資金流出（相對平均）</text>
-        <text x="${W - padR - 40}" y="${H - 16}" text-anchor="end" fill="#64748b" font-size="14" font-weight="700">資金流入（相對平均） →</text>
+        <text x="${padL + (isMobile ? 8 : 40)}" y="${H - 12}" fill="#64748b" font-size="${isMobile ? '11' : '14'}" font-weight="700">← 資金流出</text>
+        <text x="${W - padR - (isMobile ? 8 : 40)}" y="${H - 12}" text-anchor="end" fill="#64748b" font-size="${isMobile ? '11' : '14'}" font-weight="700">資金流入 →</text>
       `;
 
       let bubblesSvg = '';
@@ -1894,7 +2086,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
         const cx = mapX(xVal);
         const cy = mapY(yVal);
-        const r = Math.max(20, Math.min(54, Math.sqrt(s.display_weight) * 3.2));
+        const rBase = Math.max(20, Math.min(54, Math.sqrt(s.display_weight) * 3.2));
+        const r = isMobile ? rBase * 0.62 : rBase;
 
         const styleMap = {
           inflow:  { fill: 'rgba(16, 185, 129, 0.42)', stroke: '#059669' },
@@ -1911,19 +2104,20 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           trailSvg = `<polyline points="${pts}" fill="none" stroke="${st.stroke}" stroke-width="2" stroke-opacity="0.45" stroke-dasharray="3,2" />`;
         }
 
-        const shortName = s.name.length > 7 ? s.name.slice(0, 6) + '…' : s.name;
+        const shortName = s.name.length > (isMobile ? 5 : 7) ? s.name.slice(0, isMobile ? 4 : 6) + '…' : s.name;
         const xStr = xVal > 0 ? `+${Math.round(xVal)}%` : `${Math.round(xVal)}%`;
         const isSel = s.id === selectedSectorId;
+        const lblFontSize = isMobile ? 10 : 12.5;
 
         bubblesSvg += `
           <g style="cursor:pointer;" onclick="selectConceptSector('${s.id}')">
             ${trailSvg}
             <circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}"
                     fill="${st.fill}" stroke="${isSel ? '#0284c7' : st.stroke}" stroke-width="${isSel ? 3.5 : 1.8}" />
-            <text x="${cx.toFixed(1)}" y="${(cy - (xVal >= 0 ? 3 : -4)).toFixed(1)}"
-                  text-anchor="middle" fill="#ffffff" font-size="12.5" font-weight="800"
-                  style="paint-order:stroke;stroke:#1e293b;stroke-width:3px;stroke-linejoin:round;">${shortName}</text>
-            ${xVal >= 0 ? `<text x="${cx.toFixed(1)}" y="${(cy + 13).toFixed(1)}"
+            <text x="${cx.toFixed(1)}" y="${(cy - (xVal >= 0 && !isMobile ? 3 : -3.5)).toFixed(1)}"
+                  text-anchor="middle" fill="#ffffff" font-size="${lblFontSize}" font-weight="800"
+                  style="paint-order:stroke;stroke:#1e293b;stroke-width:2.5px;stroke-linejoin:round;">${shortName}</text>
+            ${xVal >= 0 && !isMobile ? `<text x="${cx.toFixed(1)}" y="${(cy + 13).toFixed(1)}"
                   text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700"
                   style="paint-order:stroke;stroke:#1e293b;stroke-width:2.5px;stroke-linejoin:round;">${xStr}</text>` : ''}
             <title>${s.name} | 資金相對平均: ${xStr} | 動能Y: ${yVal} | 當日平均漲跌: ${fmtSigned(s.avg_change_pct, 2, '%')} | 成交額: ${s.turnover_100m}億</title>
@@ -1932,7 +2126,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       });
 
       container.innerHTML = `
-        <svg width="${W}" height="${H}" style="display:block;">
+        <svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;">
           ${gridSvg}
           ${quadLabelsSvg}
           ${bubblesSvg}
@@ -2069,39 +2263,39 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           value: fmtNum(t.close, 2),
           chg: `${fmtSigned(t.change, 2)} (${fmtSigned(t.change_pct, 2, '%')})`,
           rawChg: t.change,
-          footLeft: `成交金額 ${fmtNum(t.turnover_100m, 2)} 億`,
+          footLeft: `成交額 ${fmtNum(t.turnover_100m, 2)} 億`,
           footRight: `高低 ${fmtNum(t.low, 0)} ~ ${fmtNum(t.high, 0)}`
         },
         {
           title: '三大法人買賣超合計',
           tag: DATA.twse_date || '',
           value: `${fmtSigned(instTotal.net_100m, 2)} 億`,
-          chg: `買進 ${fmtNum(instTotal.buy_100m, 1)}億 / 賣出 ${fmtNum(instTotal.sell_100m, 1)}億`,
+          chg: `買 ${fmtNum(instTotal.buy_100m, 1)}億 / 賣 ${fmtNum(instTotal.sell_100m, 1)}億`,
           rawChg: instTotal.net_100m,
           footLeft: '外資/投信/自營合計',
-          footRight: '單位：新台幣億元'
+          footRight: '單位：億元'
         },
         {
           title: '外資及陸資買賣超',
           tag: DATA.twse_date || '',
           value: `${fmtSigned(instForeign.net_100m, 2)} 億`,
-          chg: `買進 ${fmtNum(instForeign.buy_100m, 1)}億 / 賣出 ${fmtNum(instForeign.sell_100m, 1)}億`,
+          chg: `買 ${fmtNum(instForeign.buy_100m, 1)}億 / 賣 ${fmtNum(instForeign.sell_100m, 1)}億`,
           rawChg: instForeign.net_100m,
           footLeft: '不含外資自營商',
-          footRight: '單位：新台幣億元'
+          footRight: '單位：億元'
         },
         {
           title: '投信法人買賣超',
           tag: DATA.twse_date || '',
           value: `${fmtSigned(instTrust.net_100m, 2)} 億`,
-          chg: `買進 ${fmtNum(instTrust.buy_100m, 1)}億 / 賣出 ${fmtNum(instTrust.sell_100m, 1)}億`,
+          chg: `買 ${fmtNum(instTrust.buy_100m, 1)}億 / 賣 ${fmtNum(instTrust.sell_100m, 1)}億`,
           rawChg: instTrust.net_100m,
           footLeft: '投信基金動向',
-          footRight: '單位：新台幣億元'
+          footRight: '單位：億元'
         },
         {
           title: `${txf.name || '台指期夜盤'} (${txf.symbol_id || 'TXF'})`,
-          tag: '15:00-05:00 夜盤',
+          tag: '15:00-05:00',
           value: fmtNum(txf.last, 0),
           chg: `${fmtSigned(txf.change, 0)} (${fmtSigned(txf.change_pct, 2, '%')})`,
           rawChg: txf.change,
@@ -2112,9 +2306,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           title: '權證市場總成交表現',
           tag: DATA.twse_date || '',
           value: `${fmtNum(war.total_turnover_100m, 2)} 億`,
-          chg: `總成交量 ${fmtNum(war.total_volume_lots, 0)} 張`,
+          chg: `總量 ${fmtNum(war.total_volume_lots, 0)} 張`,
           rawChg: 1,
-          footLeft: `有成交權證 ${fmtNum(war.active_count, 0)} 檔`,
+          footLeft: `成交 ${fmtNum(war.active_count, 0)} 檔`,
           footRight: '認購 + 認售合計'
         }
       ];
@@ -2147,13 +2341,16 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       }
 
       const rect = container.getBoundingClientRect();
-      const W = Math.max(rect.width - 24, 320);
-      const H = Math.max(rect.height - 24, 180);
-      const padL = 58, padR = 16, padT = 16, padB = 28;
+      const W = Math.max(rect.width - 20, 220);
+      const H = Math.max(rect.height - 20, 175);
+      const isCompact = W < 420;
+      const padL = isCompact ? 46 : 58;
+      const padR = isCompact ? 8 : 16;
+      const padT = 14, padB = 26;
       const priceH = Math.floor((H - padT - padB) * 0.72);
-      const volTop = padT + priceH + 10;
+      const volTop = padT + priceH + 8;
       const volH = (H - padB) - volTop;
-      const plotW = W - padL - padR;
+      const plotW = Math.max(40, W - padL - padR);
 
       const highs = items.map(d => Number(d.high || d.close));
       const lows = items.map(d => Number(d.low || d.close));
@@ -2178,18 +2375,19 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         const py = padT + (g / 4) * priceH;
         const pVal = maxP - (g / 4) * (maxP - minP);
         gridSvg += `<line x1="${padL}" y1="${py}" x2="${W - padR}" y2="${py}" stroke="rgba(148,163,184,0.12)" stroke-dasharray="3,3" />`;
-        gridSvg += `<text x="${padL - 6}" y="${py + 4}" text-anchor="end" fill="#64748b" font-size="11">${fmtNum(pVal, options.decimals ?? 0)}</text>`;
+        gridSvg += `<text x="${padL - 5}" y="${py + 4}" text-anchor="end" fill="#64748b" font-size="${isCompact ? '10' : '11'}">${fmtNum(pVal, options.decimals ?? 0)}</text>`;
       }
 
-      const step = Math.max(1, Math.floor(items.length / 5));
+      const tickCount = isCompact ? 4 : 5;
+      const step = Math.max(1, Math.floor(items.length / tickCount));
       for (let i = 0; i < items.length; i += step) {
         const x = xAt(i);
         const lbl = (items[i].date || items[i].time || '').slice(-5);
-        gridSvg += `<text x="${x}" y="${H - 6}" text-anchor="middle" fill="#64748b" font-size="11">${lbl}</text>`;
+        gridSvg += `<text x="${x}" y="${H - 5}" text-anchor="middle" fill="#64748b" font-size="${isCompact ? '10' : '11'}">${lbl}</text>`;
       }
 
       let mainSvg = '';
-      const barW = Math.max(2, Math.min(14, (plotW / items.length) * 0.65));
+      const barW = Math.max(1.8, Math.min(14, (plotW / items.length) * 0.65));
 
       if (options.mode === 'candle') {
         items.forEach((d, i) => {
@@ -2237,7 +2435,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       });
 
       container.innerHTML = `
-        <svg width="${W}" height="${H}" style="overflow:visible;cursor:crosshair;" id="svg-${containerId}">
+        <svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" style="overflow:visible;cursor:crosshair;touch-action:pan-y;" id="svg-${containerId}">
           ${gridSvg}
           ${volSvg}
           ${mainSvg}
@@ -2250,9 +2448,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       const crossV = document.getElementById(`cross-v-${containerId}`);
       const tipEl = document.getElementById(`tip-${containerId}`);
 
-      svgEl.addEventListener('mousemove', (e) => {
+      function showTooltipAtClientX(clientX) {
         const b = svgEl.getBoundingClientRect();
-        const mx = e.clientX - b.left;
+        const mx = clientX - b.left;
         const ratio = Math.max(0, Math.min(1, (mx - padL) / plotW));
         const idx = Math.round(ratio * (items.length - 1));
         const d = items[idx];
@@ -2273,10 +2471,18 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           <div style="color:#94a3b8;margin-top:2px;">${volLabel}</div>
         `;
         tipEl.style.display = 'block';
-        const tipLeft = Math.min(W - 190, Math.max(8, cx - 70));
+        const tipLeft = Math.min(Math.max(8, W - 185), Math.max(8, cx - 70));
         tipEl.style.left = `${tipLeft}px`;
-        tipEl.style.top = '12px';
-      });
+        tipEl.style.top = '10px';
+      }
+
+      svgEl.addEventListener('mousemove', (e) => showTooltipAtClientX(e.clientX));
+      svgEl.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches[0]) showTooltipAtClientX(e.touches[0].clientX);
+      }, { passive: true });
+      svgEl.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches[0]) showTooltipAtClientX(e.touches[0].clientX);
+      }, { passive: true });
 
       svgEl.addEventListener('mouseleave', () => {
         crossV.setAttribute('visibility', 'hidden');
@@ -2345,7 +2551,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
             const isPos = it.net_100m >= 0;
             const color = isPos ? 'var(--up)' : 'var(--down)';
             return `
-              <div style="display:grid;grid-template-columns:190px 1fr 95px;align-items:center;gap:12px;font-size:12.5px;">
+              <div class="inst-bar-row">
                 <div style="color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${it.name}</div>
                 <div style="background:rgba(255,255,255,0.05);height:12px;border-radius:99px;overflow:hidden;position:relative;">
                   <div style="width:${pct.toFixed(1)}%;height:100%;background:${color};border-radius:99px;"></div>
@@ -2586,16 +2792,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         .catch(() => {});
     });
 
+    let lastWindowWidth = window.innerWidth;
     window.addEventListener('resize', () => {
-      if (currentMainPage === 'sectors') {
-        renderTreemap();
-        renderRotationChart();
-      } else if (currentMainPage === 'global') {
-        renderGlobalMarketsPage();
-      } else {
-        renderTaiexSection();
-        renderTxfNightSection();
-      }
+      if (Math.abs(window.innerWidth - lastWindowWidth) < 8) return;
+      lastWindowWidth = window.innerWidth;
+      redrawActivePageCharts();
     });
   </script>
 </body>
