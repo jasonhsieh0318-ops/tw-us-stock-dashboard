@@ -1013,6 +1013,40 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border-color: rgba(56, 189, 248, 0.55);
       box-shadow: 0 2px 8px rgba(56, 189, 248, 0.18);
     }
+
+    /* Recent 5-Day Mini History Strip inside KPI Cards */
+    .recent-5d-strip {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.18);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .recent-5d-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+      margin-bottom: 2px;
+    }
+
+    .recent-5d-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: rgba(11, 15, 23, 0.35);
+    }
+
+    .recent-5d-row.active-day {
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
   </style>
 </head>
 <body>
@@ -1152,7 +1186,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       <!-- 最近 5 個交易日快速切換列 -->
       <div class="history-5d-bar" id="history-5d-bar">
         <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary);font-weight:600;">
-          <span>📅 台股近 5 個交易日歷史資料切換：</span>
+          <span>📅 儀表板近 5 個交易日歷史資料切換（全頁面同步）：</span>
         </div>
         <div class="history-5d-chips" id="history-5d-chips"></div>
       </div>
@@ -1204,6 +1238,26 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
                 </thead>
                 <tbody></tbody>
               </table>
+            </div>
+            <div style="margin-top:14px;">
+              <div style="font-size:12.5px;font-weight:700;color:var(--accent);margin-bottom:8px;">📅 近 5 個交易日台股加權指數與三大法人買賣超總覽（點擊列可切換當日全儀表板明細）</div>
+              <div class="table-wrap">
+                <table id="twse-5d-summary-table">
+                  <thead>
+                    <tr>
+                      <th>交易日期</th>
+                      <th>加權收盤</th>
+                      <th>漲跌點數 (%)</th>
+                      <th>成交額 (億)</th>
+                      <th>外資 (億)</th>
+                      <th>投信 (億)</th>
+                      <th>自營商 (億)</th>
+                      <th>三大法人合計 (億)</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
             </div>
           </section>
         </div>
@@ -1708,7 +1762,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       const chipsBox = document.getElementById('history-5d-chips');
       const barBox = document.getElementById('history-5d-bar');
       if (barBox) {
-        barBox.style.display = currentMainPage === 'global' ? 'none' : 'flex';
+        barBox.style.display = 'flex';
       }
       if (chipsBox && avail.length > 0) {
         chipsBox.innerHTML = avail.map((d, idx) => {
@@ -1728,23 +1782,37 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         if (!DATA.taiex) DATA.taiex = {};
         if (hist.taiex_latest) DATA.taiex.latest = hist.taiex_latest;
         if (hist.taiex_breadth) DATA.taiex.breadth = hist.taiex_breadth;
+        if (hist.taiex_series) DATA.taiex.series = hist.taiex_series;
         if (hist.institutional_summary) DATA.institutional_summary = hist.institutional_summary;
         if (hist.institutional_top50) DATA.institutional_top50 = hist.institutional_top50;
         if (hist.top15_value) DATA.top15_value = hist.top15_value;
         if (hist.top15_volume) DATA.top15_volume = hist.top15_volume;
-        if (hist.concept_sectors) DATA.concept_sectors = hist.concept_sectors;
+        if (hist.concept_sectors) {
+          DATA.concept_sectors = hist.concept_sectors;
+          const csDates = hist.concept_sectors.dates || [];
+          const foundIdx = csDates.indexOf(dateIso);
+          if (foundIdx >= 0) rotationDayIdx = foundIdx;
+          else if (csDates.length > 0) rotationDayIdx = csDates.length - 1;
+        }
         if (hist.warrants) DATA.warrants = hist.warrants;
+        if (hist.txf_night) DATA.txf_night = hist.txf_night;
+        if (hist.brent) DATA.brent = hist.brent;
+        if (hist.nq) DATA.nq = hist.nq;
+        if (hist.global_markets) DATA.global_markets = hist.global_markets;
       }
 
       renderTradingDaySelector();
       renderKPIs();
       renderTaiexSection();
       renderInstitutionalSummary();
+      renderTxfNightSection();
       renderTop15Section();
       renderTop50Tables();
       renderWarrantsSection();
       if (currentMainPage === 'sectors') {
         renderConceptSectorsPage();
+      } else if (currentMainPage === 'global') {
+        renderGlobalMarketsPage();
       }
     }
 
@@ -1808,7 +1876,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
       const barBox = document.getElementById('history-5d-bar');
       if (barBox) {
-        barBox.style.display = page === 'global' ? 'none' : 'flex';
+        barBox.style.display = 'flex';
       }
 
       if (window.innerWidth <= 1024) {
@@ -1836,6 +1904,22 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     // =========================================================================
     // Page 3 Renderers: US 4 Major Indices, Asia Indices (Nikkei/KOSPI), NQ & Brent, Taiwan 4 ADRs
     // =========================================================================
+    function buildRecent5dStripHtml(recentList, pricePrefix = '', isAdr = false) {
+      if (!recentList || !recentList.length) return '';
+      return `
+        <div class="recent-5d-strip">
+          <div class="recent-5d-title">📅 近 5 個交易日歷史紀錄</div>
+          ${recentList.map((r, i) => `
+            <div class="recent-5d-row ${i === 0 ? 'active-day' : ''}">
+              <span style="color:var(--text-secondary);">${r.date || ''}</span>
+              <span style="font-weight:700;">${pricePrefix}${fmtNum(r.close, 2)}${isAdr && r.implied_tw_price ? ` <span style="font-size:10px;color:var(--text-muted);">(折NT$${fmtNum(r.implied_tw_price, 0)})</span>` : ''}</span>
+              <span class="${clsUpDown(r.change)}" style="font-weight:700;">${fmtSigned(r.change_pct, 2, '%')}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
     function buildIndexKpiCardHtml(item, isAdr = false) {
       const cardCls = item.change > 0 ? 'up-card' : (item.change < 0 ? 'down-card' : '');
       const pricePrefix = isAdr ? '$' : '';
@@ -1860,6 +1944,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
             <span>${footLeft}</span>
             <span class="${isAdr ? clsUpDown(item.premium_pct) : ''}" style="font-weight:${isAdr ? '700' : '400'};">${footRight}</span>
           </div>
+          ${buildRecent5dStripHtml(item.recent_5d, pricePrefix, isAdr)}
         </div>
       `;
     }
@@ -1876,7 +1961,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           chg: `${fmtSigned(nq.change, 2)} (${fmtSigned(nq.change_pct, 2, '%')})`,
           rawChg: nq.change,
           footLeft: `成交量 ${fmtNum(nq.volume, 0)} 口`,
-          footRight: `當日高低 ${fmtNum(nq.low, 2)} ~ ${fmtNum(nq.high, 2)}`
+          footRight: `當日高低 ${fmtNum(nq.low, 2)} ~ ${fmtNum(nq.high, 2)}`,
+          recent_5d: nq.recent_5d || [],
+          prefix: ''
         },
         {
           title: '布蘭特原油期貨 (Brent Crude Oil)',
@@ -1885,7 +1972,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           chg: `${fmtSigned(brent.change, 2)} (${fmtSigned(brent.change_pct, 2, '%')})`,
           rawChg: brent.change,
           footLeft: `成交量 ${fmtNum(brent.volume, 0)} 口`,
-          footRight: `當日高低 $${fmtNum(brent.low, 2)} ~ $${fmtNum(brent.high, 2)}`
+          footRight: `當日高低 $${fmtNum(brent.low, 2)} ~ $${fmtNum(brent.high, 2)}`,
+          recent_5d: brent.recent_5d || [],
+          prefix: '$'
         }
       ];
 
@@ -1905,6 +1994,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
                 <span>${c.footLeft}</span>
                 <span>${c.footRight}</span>
               </div>
+              ${buildRecent5dStripHtml(c.recent_5d, c.prefix, false)}
             </div>
           `;
         }).join('');
@@ -2764,6 +2854,27 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           }).join('')}
         </div>
       `;
+
+      const tbody5d = document.querySelector('#twse-5d-summary-table tbody');
+      if (tbody5d) {
+        const list5d = DATA.twse_5d_overview || [];
+        tbody5d.innerHTML = list5d.map(r => {
+          const isCur = r.date === (currentSelectedDate || DATA.twse_date);
+          const rowSt = isCur ? 'background:rgba(56,189,248,0.14);font-weight:700;cursor:pointer;' : 'cursor:pointer;';
+          return `
+            <tr style="${rowSt}" onclick="switchTradingDay('${r.date}')" title="點擊切換至 ${r.date} 全儀表板資料">
+              <td><span class="code-tag">${r.date}</span> ${isCur ? '<span style="font-size:10.5px;color:#38bdf8;">(檢視中)</span>' : ''}</td>
+              <td class="${clsUpDown(r.taiex_change)}" style="font-weight:700;">${fmtNum(r.taiex_close, 2)}</td>
+              <td class="${clsUpDown(r.taiex_change)}">${fmtSigned(r.taiex_change, 2)} (${fmtSigned(r.taiex_change_pct, 2, '%')})</td>
+              <td>${fmtNum(r.turnover_100m, 2)}</td>
+              <td class="${clsUpDown(r.foreign_net_100m)}">${fmtSigned(r.foreign_net_100m, 2)}</td>
+              <td class="${clsUpDown(r.trust_net_100m)}">${fmtSigned(r.trust_net_100m, 2)}</td>
+              <td class="${clsUpDown(r.dealer_net_100m)}">${fmtSigned(r.dealer_net_100m, 2)}</td>
+              <td class="${clsUpDown(r.total_net_100m)}" style="font-weight:700;">${fmtSigned(r.total_net_100m, 2)}</td>
+            </tr>
+          `;
+        }).join('');
+      }
     }
 
     function renderTxfNightSection() {
