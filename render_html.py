@@ -951,6 +951,68 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-size: 11.5px;
       font-weight: 700;
     }
+
+    /* 5-Trading-Day Selector & Chip Bar */
+    .date-select {
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+      padding-right: 4px;
+    }
+
+    .date-select option {
+      background: #0f172a;
+      color: #f8fafc;
+    }
+
+    .history-5d-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: rgba(19, 27, 43, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+    }
+
+    .history-5d-chips {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .day-chip {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 5px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .day-chip:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+
+    .day-chip.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(99, 102, 241, 0.25));
+      color: #fff;
+      border-color: rgba(56, 189, 248, 0.55);
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.18);
+    }
   </style>
 </head>
 <body>
@@ -979,7 +1041,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     </div>
 
     <div class="meta-bar">
-      <span class="pill"><span class="dot-live"></span> 交易日：<strong id="meta-twse-date">--</strong></span>
+      <span class="pill">
+        <span class="dot-live"></span> 交易日：
+        <select id="twse-date-select" class="date-select" onchange="switchTradingDay(this.value)">
+          <option id="meta-twse-date" value="">--</option>
+        </select>
+      </span>
       <span class="pill meta-updated-pill">最後更新：<strong id="meta-updated-at">--</strong></span>
     </div>
   </header>
@@ -1059,16 +1126,20 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           <span class="num-pill">1</span>
           <span>美股四大指數即時走勢</span>
         </button>
-        <button class="sidebar-link" data-target="sec-global-futures" onclick="navigateToSection('global', 'sec-global-futures', this)">
+        <button class="sidebar-link" data-target="sec-asia-indices" onclick="navigateToSection('global', 'sec-asia-indices', this)">
           <span class="num-pill">2</span>
+          <span>日經 225 & 韓國 KOSPI 指數</span>
+        </button>
+        <button class="sidebar-link" data-target="sec-global-futures" onclick="navigateToSection('global', 'sec-global-futures', this)">
+          <span class="num-pill">3</span>
           <span>小那斯達克 (NQ) & 布蘭特原油</span>
         </button>
         <button class="sidebar-link" data-target="sec-tw-adrs" onclick="navigateToSection('global', 'sec-tw-adrs', this)">
-          <span class="num-pill">3</span>
+          <span class="num-pill">4</span>
           <span>台積電 / 日月光 / 鴻海 / 聯電 ADR</span>
         </button>
         <button class="sidebar-link" data-target="sec-adr-table" onclick="navigateToSection('global', 'sec-adr-table', this)">
-          <span class="num-pill">4</span>
+          <span class="num-pill">5</span>
           <span>台股 ADR 折溢價對照表</span>
         </button>
       </div>
@@ -1077,6 +1148,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
     <!-- Main Content Area -->
     <main class="main-area">
+
+      <!-- 最近 5 個交易日快速切換列 -->
+      <div class="history-5d-bar" id="history-5d-bar">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary);font-weight:600;">
+          <span>📅 台股近 5 個交易日歷史資料切換：</span>
+        </div>
+        <div class="history-5d-chips" id="history-5d-chips"></div>
+      </div>
 
       <!-- ==========================================================
            PAGE 1: 台股每日盤後總覽儀表板
@@ -1411,7 +1490,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       </div>
 
       <!-- ==========================================================
-           PAGE 3: 國際金融頁面（美股四大指數 · 小那斯達克 NQ & 布蘭特原油 · 台股四大 ADR）
+           PAGE 3: 國際金融頁面（美股四大指數 · 日經225 & 韓國KOSPI · 小那斯達克 NQ & 布蘭特原油 · 台股四大 ADR）
            ========================================================== -->
       <div id="page-global" class="page-view">
 
@@ -1433,7 +1512,25 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           <div class="grid-2" id="us-indices-charts-grid"></div>
         </section>
 
-        <!-- 2. 小那斯達克期貨 (NQ) & 布蘭特原油期貨 (Brent) -->
+        <!-- 2. 日經 225 指數 & 韓國綜合指數 (KOSPI) -->
+        <section id="sec-asia-indices" class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="section-tag">JAPAN & KOREA INDICES</span>
+              日韓主要股市指數即時與歷史走勢（日經 225 指數 · 韓國綜合指數 KOSPI）
+            </div>
+            <div class="tab-group">
+              <button class="tab-btn active" onclick="switchAsiaChartMode('intraday', this)">日內即時分時走勢</button>
+              <button class="tab-btn" onclick="switchAsiaChartMode('daily', this)">60日 K 線走勢 (OHLC)</button>
+              <button class="tab-btn" onclick="switchAsiaChartMode('line', this)">60日收盤走勢線</button>
+            </div>
+          </div>
+
+          <div id="global-asia-kpi-grid" class="grid-2" style="margin-bottom:20px;"></div>
+          <div class="grid-2" id="asia-indices-charts-grid"></div>
+        </section>
+
+        <!-- 3. 小那斯達克期貨 (NQ) & 布蘭特原油期貨 (Brent) -->
         <section id="sec-global-futures" class="card">
           <div class="card-header">
             <div class="card-title">
@@ -1453,7 +1550,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           <!-- NQ & Brent 雙欄走勢圖 -->
           <div class="grid-2">
             <div style="display:flex; flex-direction:column; gap:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px;">
                 <div>
                   <strong style="font-size:15.5px;">小那斯達克期貨 (E-mini Nasdaq-100)</strong>
                   <span id="nq-sub" style="font-size:12px; color:var(--text-secondary); margin-left:8px;"></span>
@@ -1464,7 +1561,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
             </div>
 
             <div style="display:flex; flex-direction:column; gap:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px;">
                 <div>
                   <strong style="font-size:15.5px;">布蘭特原油期貨 (Brent Crude)</strong>
                   <span id="brent-sub" style="font-size:12px; color:var(--text-secondary); margin-left:8px;"></span>
@@ -1476,7 +1573,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           </div>
         </section>
 
-        <!-- 3. 台積電、日月光、鴻海、聯電 ADR 即時走勢 -->
+        <!-- 4. 台積電、日月光、鴻海、聯電 ADR 即時走勢 -->
         <section id="sec-tw-adrs" class="card">
           <div class="card-header">
             <div class="card-title">
@@ -1497,7 +1594,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           <div class="grid-2" id="tw-adrs-charts-grid"></div>
         </section>
 
-        <!-- 4. 台股 ADR 折溢價與母股對照表 -->
+        <!-- 5. 台股 ADR 折溢價與母股對照表 -->
         <section id="sec-adr-table" class="card">
           <div class="card-header">
             <div class="card-title">
@@ -1552,7 +1649,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     let replayTimer = null;
 
     let currentGlobalChartMode = 'intraday';
+    let currentAsiaChartMode = 'intraday';
     let currentAdrChartMode = 'intraday';
+    let currentSelectedDate = null;
 
     function fmtNum(n, digits = 0) {
       if (n === null || n === undefined || isNaN(n)) return '--';
@@ -1589,6 +1688,64 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     function rankBadge(r) {
       const cls = r <= 3 ? `rank-badge rank-${r}` : 'rank-badge';
       return `<span class="${cls}">${r}</span>`;
+    }
+
+    function renderTradingDaySelector() {
+      const avail = DATA.available_dates || (DATA.twse_date ? [DATA.twse_date] : []);
+      if (!currentSelectedDate || !avail.includes(currentSelectedDate)) {
+        currentSelectedDate = avail[0] || DATA.twse_date || '';
+      }
+
+      const sel = document.getElementById('twse-date-select');
+      if (sel && avail.length > 0) {
+        sel.innerHTML = avail.map((d, idx) => {
+          const suffix = idx === 0 ? ' (最新)' : ` (前${idx}交易日)`;
+          const selectedAttr = d === currentSelectedDate ? 'selected' : '';
+          return `<option value="${d}" ${selectedAttr}>${d}${suffix}</option>`;
+        }).join('');
+      }
+
+      const chipsBox = document.getElementById('history-5d-chips');
+      const barBox = document.getElementById('history-5d-bar');
+      if (barBox) {
+        barBox.style.display = currentMainPage === 'global' ? 'none' : 'flex';
+      }
+      if (chipsBox && avail.length > 0) {
+        chipsBox.innerHTML = avail.map((d, idx) => {
+          const label = idx === 0 ? `${d} (最新)` : d;
+          const activeCls = d === currentSelectedDate ? 'active' : '';
+          return `<button class="day-chip ${activeCls}" onclick="switchTradingDay('${d}')">${label}</button>`;
+        }).join('');
+      }
+    }
+
+    function switchTradingDay(dateIso) {
+      const hist = (DATA.history_5d && DATA.history_5d[dateIso]) || null;
+      currentSelectedDate = dateIso;
+      if (hist) {
+        DATA.twse_date = hist.twse_date || dateIso;
+        DATA.twse_date_raw = hist.twse_date_raw || dateIso.replace(/-/g, '');
+        if (!DATA.taiex) DATA.taiex = {};
+        if (hist.taiex_latest) DATA.taiex.latest = hist.taiex_latest;
+        if (hist.taiex_breadth) DATA.taiex.breadth = hist.taiex_breadth;
+        if (hist.institutional_summary) DATA.institutional_summary = hist.institutional_summary;
+        if (hist.institutional_top50) DATA.institutional_top50 = hist.institutional_top50;
+        if (hist.top15_value) DATA.top15_value = hist.top15_value;
+        if (hist.top15_volume) DATA.top15_volume = hist.top15_volume;
+        if (hist.concept_sectors) DATA.concept_sectors = hist.concept_sectors;
+        if (hist.warrants) DATA.warrants = hist.warrants;
+      }
+
+      renderTradingDaySelector();
+      renderKPIs();
+      renderTaiexSection();
+      renderInstitutionalSummary();
+      renderTop15Section();
+      renderTop50Tables();
+      renderWarrantsSection();
+      if (currentMainPage === 'sectors') {
+        renderConceptSectorsPage();
+      }
     }
 
     function redrawActivePageCharts() {
@@ -1649,6 +1806,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       document.getElementById('btn-page-sectors').classList.toggle('active', page === 'sectors');
       document.getElementById('btn-page-global').classList.toggle('active', page === 'global');
 
+      const barBox = document.getElementById('history-5d-bar');
+      if (barBox) {
+        barBox.style.display = page === 'global' ? 'none' : 'flex';
+      }
+
       if (window.innerWidth <= 1024) {
         document.body.classList.remove('sidebar-open-mobile');
       }
@@ -1672,7 +1834,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
 
     // =========================================================================
-    // Page 3 Renderers: US 4 Major Indices, NQ & Brent Futures, Taiwan 4 ADRs
+    // Page 3 Renderers: US 4 Major Indices, Asia Indices (Nikkei/KOSPI), NQ & Brent, Taiwan 4 ADRs
     // =========================================================================
     function buildIndexKpiCardHtml(item, isAdr = false) {
       const cardCls = item.change > 0 ? 'up-card' : (item.change < 0 ? 'down-card' : '');
@@ -1783,6 +1945,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     function renderGlobalMarketsPage() {
       const gm = DATA.global_markets || {};
       const usIndices = gm.us_indices || [];
+      const asiaIndices = gm.asia_indices || [];
       const twAdrs = gm.tw_adrs || [];
       const usdTwd = gm.usd_twd || 32.15;
 
@@ -1790,13 +1953,17 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
       document.getElementById('global-us-kpi-grid').innerHTML =
         usIndices.map(it => buildIndexKpiCardHtml(it, false)).join('');
+      const asiaKpiEl = document.getElementById('global-asia-kpi-grid');
+      if (asiaKpiEl) {
+        asiaKpiEl.innerHTML = asiaIndices.map(it => buildIndexKpiCardHtml(it, false)).join('');
+      }
       document.getElementById('global-adr-kpi-grid').innerHTML =
         twAdrs.map(it => buildIndexKpiCardHtml(it, true)).join('');
 
       const usGrid = document.getElementById('us-indices-charts-grid');
       usGrid.innerHTML = usIndices.map((it, idx) => `
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;">
             <div>
               <strong style="font-size:15.5px;">${it.name} (${it.code})</strong>
               <span style="font-size:12px;color:var(--text-secondary);margin-left:8px;">${it.en_name || ''} · ${it.date || ''}</span>
@@ -1817,13 +1984,40 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         renderInteractiveChart(`chart-us-idx-${idx}`, series, { mode, decimals: 2 });
       });
 
+      // Render Japan Nikkei 225 & Korea KOSPI Indices
+      const asiaGrid = document.getElementById('asia-indices-charts-grid');
+      if (asiaGrid) {
+        asiaGrid.innerHTML = asiaIndices.map((it, idx) => `
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;">
+              <div>
+                <strong style="font-size:15.5px;">${it.name} (${it.code})</strong>
+                <span style="font-size:12px;color:var(--text-secondary);margin-left:8px;">${it.en_name || ''} · ${it.date || ''}</span>
+              </div>
+              <div class="${clsUpDown(it.change)}" style="font-weight:700;font-size:14px;">
+                ${fmtNum(it.last, 2)} (${fmtSigned(it.change, 2)} / ${fmtSigned(it.change_pct, 2, '%')})
+              </div>
+            </div>
+            <div id="chart-asia-idx-${idx}" class="chart-box" style="height:275px;"></div>
+          </div>
+        `).join('');
+
+        asiaIndices.forEach((it, idx) => {
+          const series = (currentAsiaChartMode === 'intraday' && (it.intraday_bars || []).length)
+            ? it.intraday_bars
+            : (it.daily_bars || []);
+          const mode = currentAsiaChartMode === 'daily' ? 'candle' : 'line';
+          renderInteractiveChart(`chart-asia-idx-${idx}`, series, { mode, decimals: 2 });
+        });
+      }
+
       // Render NQ & Brent Futures on Global Page
       renderGlobalFuturesSection();
 
       const adrGrid = document.getElementById('tw-adrs-charts-grid');
       adrGrid.innerHTML = twAdrs.map((it, idx) => `
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;">
             <div>
               <strong style="font-size:15.5px;">${it.name} (${it.code})</strong>
               <span style="font-size:12px;color:var(--text-secondary);margin-left:8px;">對應 ${it.tw_code} ${it.tw_name} · 折算 NT$${fmtNum(it.implied_tw_price, 2)}</span>
@@ -1863,6 +2057,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
     function switchGlobalChartMode(mode, btn) {
       currentGlobalChartMode = mode;
+      btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGlobalMarketsPage();
+    }
+
+    function switchAsiaChartMode(mode, btn) {
+      currentAsiaChartMode = mode;
       btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderGlobalMarketsPage();
@@ -2253,7 +2454,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       const txf = DATA.txf_night || {};
       const war = DATA.warrants || {};
 
-      document.getElementById('meta-twse-date').textContent = DATA.twse_date || '--';
+      const metaDateEl = document.getElementById('meta-twse-date');
+      if (metaDateEl) metaDateEl.textContent = DATA.twse_date || '--';
       document.getElementById('meta-updated-at').textContent = DATA.updated_at || '--';
 
       const cards = [
@@ -2765,6 +2967,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       if (dates.length > 0) {
         rotationDayIdx = dates.length - 1;
       }
+      renderTradingDaySelector();
       renderKPIs();
       renderTaiexSection();
       renderInstitutionalSummary();
