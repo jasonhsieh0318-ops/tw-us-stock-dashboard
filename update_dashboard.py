@@ -8,13 +8,18 @@
 3. 外資、投信及自營商每日買賣超前50名 (TWSE T86)
 4. 台股每日成交值及成交量排名前15名 (TWSE MI_INDEX ALLBUT0999)
 5. 權證交易量每日前20名次 (TWSE MI_INDEX 0999 + 0999P)
-6. 布蘭特原油走勢 (CNBC @LCO.1 1D & 30M)
+6. 布蘭特原油走勢 (CNBC @LCO.1 1D & 30M) — 支援每小時更新 (--mode futures)
 7. 台指期夜盤走勢 (TAIFEX MIS getQuoteList & getChartData1M)
-8. 小那斯達克期貨走勢 (CNBC @ND.1 1D & 30M)
+8. 小那斯達克期貨走勢 (CNBC @ND.1 1D & 30M) — 支援每小時更新 (--mode futures)
 9. 台股概念族群資金輪動圖 (四象限氣泡圖) 與 概念族群熱力圖 (Squarified Treemap)
-10. 國際金融走勢：美股四大指數 (.DJI, .IXIC, .SPX, .SOX) 及 台股四大 ADR (台積電 TSM、日月光 ASX、鴻海 HNHPF、聯電 UMC) 即時與日K走勢
+10. 國際金融走勢：
+    - 美股四大指數 (.DJI, .IXIC, .SPX, .SOX) — 支援美股收盤後更新 (--mode global)
+    - 日韓主要指數：日經 225 指數 (.N225) 與 韓國綜合指數 KOSPI (.KS11)
+    - 台股四大 ADR (台積電 TSM、日月光 ASX、鴻海 HNHPF、聯電 UMC) 即時與日K走勢
+11. 保留並支援切換最近 5 個交易日 (history_5d) 的完整台股盤後資料
 """
 
+import argparse
 import datetime
 import json
 import math
@@ -22,12 +27,13 @@ import os
 import re
 import ssl
 import time
-import urllib.request
 import urllib.parse
+import urllib.request
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_JSON_PATH = os.path.join(BASE_DIR, "data.json")
 INDEX_HTML_PATH = os.path.join(BASE_DIR, "index.html")
+HISTORY_DIR = os.path.join(BASE_DIR, "history")
 
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
@@ -212,11 +218,28 @@ US_INDICES_SPECS = [
     {"symbol": ".SOX",  "code": "SOX",  "name": "費城半導體指數", "en_name": "PHLX Semiconductor"},
 ]
 
+ASIA_INDICES_SPECS = [
+    {
+        "symbol": ".N225",
+        "alt_symbols": ["N225", "@NK.1"],
+        "code": "N225",
+        "name": "日經 225 指數",
+        "en_name": "Nikkei 225 Index (Japan)",
+    },
+    {
+        "symbol": ".KS11",
+        "alt_symbols": ["KS11", ".KOSPI"],
+        "code": "KOSPI",
+        "name": "韓國綜合指數 (KOSPI)",
+        "en_name": "KOSPI Composite Index (Korea)",
+    },
+]
+
 TW_ADR_SPECS = [
-    {"symbol": "TSM",   "alt_symbols": [],            "code": "TSM",   "name": "台積電 ADR", "tw_code": "2330", "tw_name": "台積電", "ratio": 5.0},
-    {"symbol": "ASX",   "alt_symbols": [],            "code": "ASX",   "name": "日月光 ADR", "tw_code": "3711", "tw_name": "日月光投控", "ratio": 2.0},
+    {"symbol": "TSM",   "alt_symbols": [],                   "code": "TSM",   "name": "台積電 ADR", "tw_code": "2330", "tw_name": "台積電", "ratio": 5.0},
+    {"symbol": "ASX",   "alt_symbols": [],                   "code": "ASX",   "name": "日月光 ADR", "tw_code": "3711", "tw_name": "日月光投控", "ratio": 2.0},
     {"symbol": "HNHPF", "alt_symbols": ["HNHAY", "HHPD-GB"], "code": "HNHPF", "name": "鴻海 ADR",   "tw_code": "2317", "tw_name": "鴻海", "ratio": 2.0},
-    {"symbol": "UMC",   "alt_symbols": [],            "code": "UMC",   "name": "聯電 ADR",   "tw_code": "2303", "tw_name": "聯電", "ratio": 5.0},
+    {"symbol": "UMC",   "alt_symbols": [],                   "code": "UMC",   "name": "聯電 ADR",   "tw_code": "2303", "tw_name": "聯電", "ratio": 5.0},
 ]
 
 
@@ -339,10 +362,10 @@ def fetch_taiex_history():
     return latest_date, series
 
 
-def fetch_institutional_summary(latest_date):
-    print(f"[2/8] Fetching TWSE Institutional Investors net buy/sell amount (BFI82U {latest_date})...")
+def fetch_institutional_summary(target_date):
+    print(f"  -> Fetching TWSE Institutional summary (BFI82U {target_date})...")
     bfi = fetch_json(
-        f"https://www.twse.com.tw/rwd/zh/fund/BFI82U?response=json&dayDate={latest_date}"
+        f"https://www.twse.com.tw/rwd/zh/fund/BFI82U?response=json&dayDate={target_date}"
     )
     items = []
     for row in bfi.get("data", []) or []:
@@ -361,17 +384,17 @@ def fetch_institutional_summary(latest_date):
             })
     return {
         "date": roc_to_iso(
-            f"{int(latest_date[:4]) - 1911}/{latest_date[4:6]}/{latest_date[6:8]}"
+            f"{int(target_date[:4]) - 1911}/{target_date[4:6]}/{target_date[6:8]}"
         ),
         "title": bfi.get("title", "三大法人買賣金額統計表"),
         "items": items,
     }
 
 
-def fetch_market_stocks_and_top15(latest_date):
-    print(f"[3/8] Fetching TWSE MI_INDEX (ALLBUT0999) for stock prices & Top 15 Value/Volume ({latest_date})...")
+def fetch_market_stocks_and_top15(target_date):
+    print(f"  -> Fetching TWSE MI_INDEX (ALLBUT0999) for stocks & Top 15 ({target_date})...")
     mi = fetch_json(
-        f"https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX?response=json&date={latest_date}&type=ALLBUT0999"
+        f"https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX?response=json&date={target_date}&type=ALLBUT0999"
     )
     tables = mi.get("tables", []) or []
 
@@ -443,10 +466,10 @@ def fetch_market_stocks_and_top15(latest_date):
     return stock_map, top15_value, top15_volume, breadth
 
 
-def fetch_institutional_top50(latest_date, stock_map):
-    print(f"[4/8] Fetching TWSE T86 for Foreign/Trust/Dealer Top 50 net buy & sell ({latest_date})...")
+def fetch_institutional_top50(target_date, stock_map):
+    print(f"  -> Fetching TWSE T86 for Foreign/Trust/Dealer Top 50 ({target_date})...")
     t86 = fetch_json(
-        f"https://www.twse.com.tw/rwd/zh/fund/T86?response=json&date={latest_date}&selectType=ALLBUT0999"
+        f"https://www.twse.com.tw/rwd/zh/fund/T86?response=json&date={target_date}&selectType=ALLBUT0999"
     )
     rows = t86.get("data", []) or []
     records = []
@@ -664,13 +687,13 @@ def build_concept_sectors(stock_map, inst_by_code, taiex_series):
     }
 
 
-def fetch_warrants_top20(latest_date):
-    print(f"[5/8] Fetching TWSE Warrants Call (0999) & Put (0999P) Top 20 ({latest_date})...")
+def fetch_warrants_top20(target_date):
+    print(f"  -> Fetching TWSE Warrants Call (0999) & Put (0999P) Top 20 ({target_date})...")
     warrants = []
     for w_type, label in [("0999", "認購"), ("0999P", "認售")]:
         time.sleep(0.35)
         mi_w = fetch_json(
-            f"https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX?response=json&date={latest_date}&type={w_type}"
+            f"https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX?response=json&date={target_date}&type={w_type}"
         )
         for tb in mi_w.get("tables", []) or []:
             fields = tb.get("fields") or []
@@ -722,6 +745,72 @@ def fetch_warrants_top20(latest_date):
         "top20_volume": top20_by_vol,
         "top20_value": top20_by_val,
     }
+
+
+def fetch_single_twse_day_snapshot(date_raw, date_iso, taiex_series_up_to_date, use_cache=True):
+    """
+    抓取或從本地快取讀取指定交易日 (YYYYMMDD) 的完整台股盤後資料快照
+    """
+    os.makedirs(HISTORY_DIR, exist_ok=True)
+    cache_file = os.path.join(HISTORY_DIR, f"twse_{date_raw}.json")
+    if use_cache and os.path.exists(cache_file):
+        try:
+            with open(cache_file, "r", encoding="utf-8") as cf:
+                cached = json.load(cf)
+            if cached.get("twse_date") == date_iso and cached.get("top15_value"):
+                print(f"  [Cache Hit] Loaded {date_iso} snapshot from {cache_file}")
+                return cached, {}
+        except Exception:
+            pass
+
+    print(f"[TWSE Snapshot] Fetching full Taiwan market data for {date_iso} ({date_raw})...")
+    time.sleep(0.35)
+    inst_summary = fetch_institutional_summary(date_raw)
+    time.sleep(0.35)
+    stock_map, top15_value, top15_volume, breadth = fetch_market_stocks_and_top15(date_raw)
+    time.sleep(0.35)
+    inst_top50, inst_by_code = fetch_institutional_top50(date_raw, stock_map)
+
+    for item in top15_value + top15_volume:
+        ic = inst_by_code.get(item["code"], {})
+        item["foreign_net_lots"] = ic.get("foreign_net_lots", 0)
+        item["trust_net_lots"] = ic.get("trust_net_lots", 0)
+        item["dealer_net_lots"] = ic.get("dealer_net_lots", 0)
+        item["total_net_lots"] = ic.get("total_net_lots", 0)
+
+    concept_sectors = build_concept_sectors(stock_map, inst_by_code, taiex_series_up_to_date)
+    time.sleep(0.35)
+    warrants_data = fetch_warrants_top20(date_raw)
+
+    taiex_day = taiex_series_up_to_date[-1] if taiex_series_up_to_date else {}
+    # 只保留關鍵母股價格給 ADR 折溢價計算
+    adr_parent_stocks = {
+        code: stock_map.get(code, {})
+        for code in ["2330", "3711", "2317", "2303"]
+        if code in stock_map
+    }
+
+    snapshot = {
+        "twse_date": date_iso,
+        "twse_date_raw": date_raw,
+        "taiex_latest": taiex_day,
+        "taiex_breadth": breadth,
+        "institutional_summary": inst_summary,
+        "institutional_top50": inst_top50,
+        "top15_value": top15_value,
+        "top15_volume": top15_volume,
+        "concept_sectors": concept_sectors,
+        "warrants": warrants_data,
+        "adr_parent_stocks": adr_parent_stocks,
+    }
+
+    try:
+        with open(cache_file, "w", encoding="utf-8") as cf:
+            json.dump(snapshot, cf, ensure_ascii=False)
+    except Exception as e:
+        print(f"  [WARN] Failed to write history cache {cache_file}: {e}")
+
+    return snapshot, stock_map
 
 
 def fetch_taifex_night_session():
@@ -905,8 +994,8 @@ def fetch_cnbc_symbol(symbol, display_name, extra_meta=None):
     return res
 
 
-def fetch_us_indices_and_tw_adrs(stock_map):
-    print("[8/8] Fetching US 4 Major Indices (.DJI, .IXIC, .SPX, .SOX) & Taiwan ADRs (TSM, ASX, HNHPF, UMC)...")
+def fetch_us_asia_indices_and_tw_adrs(stock_map):
+    print("[8/8] Fetching US 4 Major Indices, Japan/Korea Indices (.N225, .KS11) & Taiwan ADRs...")
     # 1. Fetch USD/TWD exchange rate for ADR premium/discount conversion
     usd_twd = 32.15
     try:
@@ -929,7 +1018,24 @@ def fetch_us_indices_and_tw_adrs(stock_map):
         except Exception as e:
             print(f"  [WARN] Failed US index {spec['symbol']}: {e}")
 
-    # 3. Fetch Taiwan 4 Major ADRs
+    # 3. Fetch Japan Nikkei 225 & Korea KOSPI Indices
+    asia_indices = []
+    for spec in ASIA_INDICES_SPECS:
+        candidates = [spec["symbol"]] + spec.get("alt_symbols", [])
+        for cand in candidates:
+            try:
+                item = fetch_cnbc_symbol(
+                    cand,
+                    spec["name"],
+                    {"code": spec["code"], "en_name": spec["en_name"]},
+                )
+                if item.get("daily_bars"):
+                    asia_indices.append(item)
+                    break
+            except Exception as e:
+                print(f"  [WARN] Failed Asia index {cand}: {e}")
+
+    # 4. Fetch Taiwan 4 Major ADRs
     tw_adrs = []
     for spec in TW_ADR_SPECS:
         candidates = [spec["symbol"]] + spec.get("alt_symbols", [])
@@ -950,7 +1056,6 @@ def fetch_us_indices_and_tw_adrs(stock_map):
         if fetched:
             adr_last = fetched.get("last", 0.0)
             ratio = spec["ratio"]
-            # 折算台股價格 = ADR價格 * USD_TWD / 換算股數
             implied_twd = round((adr_last * usd_twd) / ratio, 2) if ratio else 0.0
             premium_pct = (
                 round(((implied_twd - tw_close) / tw_close) * 100.0, 2)
@@ -973,61 +1078,12 @@ def fetch_us_indices_and_tw_adrs(stock_map):
     return {
         "usd_twd": round(usd_twd, 3),
         "us_indices": us_indices,
+        "asia_indices": asia_indices,
         "tw_adrs": tw_adrs,
     }
 
 
-def main():
-    latest_date, taiex_series = fetch_taiex_history()
-    time.sleep(0.35)
-    inst_summary = fetch_institutional_summary(latest_date)
-    time.sleep(0.35)
-    stock_map, top15_value, top15_volume, breadth = fetch_market_stocks_and_top15(latest_date)
-    time.sleep(0.35)
-    inst_top50, inst_by_code = fetch_institutional_top50(latest_date, stock_map)
-
-    for item in top15_value + top15_volume:
-        ic = inst_by_code.get(item["code"], {})
-        item["foreign_net_lots"] = ic.get("foreign_net_lots", 0)
-        item["trust_net_lots"] = ic.get("trust_net_lots", 0)
-        item["dealer_net_lots"] = ic.get("dealer_net_lots", 0)
-        item["total_net_lots"] = ic.get("total_net_lots", 0)
-
-    print("[4.5/8] Computing Concept Sector Rotation & Treemap Heatmap metrics...")
-    concept_sectors = build_concept_sectors(stock_map, inst_by_code, taiex_series)
-
-    time.sleep(0.35)
-    warrants_data = fetch_warrants_top20(latest_date)
-    time.sleep(0.35)
-    txf_night = fetch_taifex_night_session()
-
-    print("[7/8] Fetching Brent Crude Oil (@LCO.1) & E-mini Nasdaq-100 Futures (@ND.1)...")
-    brent_data = fetch_cnbc_symbol("@LCO.1", "布蘭特原油期貨 (Brent Crude)")
-    nq_data = fetch_cnbc_symbol("@ND.1", "小那斯達克期貨 (E-mini Nasdaq-100)")
-
-    global_markets = fetch_us_indices_and_tw_adrs(stock_map)
-
-    payload = {
-        "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "twse_date": f"{latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:8]}",
-        "twse_date_raw": latest_date,
-        "taiex": {
-            "latest": taiex_series[-1] if taiex_series else {},
-            "breadth": breadth,
-            "series": taiex_series,
-        },
-        "institutional_summary": inst_summary,
-        "institutional_top50": inst_top50,
-        "top15_value": top15_value,
-        "top15_volume": top15_volume,
-        "concept_sectors": concept_sectors,
-        "warrants": warrants_data,
-        "txf_night": txf_night,
-        "brent": brent_data,
-        "nq": nq_data,
-        "global_markets": global_markets,
-    }
-
+def save_and_deploy(payload):
     with open(DATA_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
     print(f"[OK] Wrote {DATA_JSON_PATH} ({os.path.getsize(DATA_JSON_PATH):,} bytes)")
@@ -1055,6 +1111,154 @@ def main():
             print(f"[WARN] GitHub Pages auto-sync failed: {e}")
 
 
+def load_existing_payload():
+    if os.path.exists(DATA_JSON_PATH):
+        try:
+            with open(DATA_JSON_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+
+def main():
+    parser = argparse.ArgumentParser(description="更新台股與國際金融儀表板資料")
+    parser.add_argument(
+        "--mode",
+        choices=["all", "global", "futures"],
+        default="all",
+        help="all: 每日18:00完整更新(含台股近5日歷史); global: 美股收盤後更新美股/ADR/日韓/期貨; futures: 每小時更新布蘭特原油與小那斯達克期貨",
+    )
+    args = parser.parse_args()
+
+    now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    existing = load_existing_payload()
+
+    # 模式 1：每小時快速更新 布蘭特原油 (@LCO.1)、小那斯達克期貨 (@ND.1) 與 台指期夜盤
+    if args.mode == "futures" and existing.get("taiex"):
+        print(f"[Mode: futures] Hourly update for Brent Crude (@LCO.1) & E-mini Nasdaq-100 (@ND.1) at {now_str}...")
+        brent_data = fetch_cnbc_symbol("@LCO.1", "布蘭特原油期貨 (Brent Crude)")
+        nq_data = fetch_cnbc_symbol("@ND.1", "小那斯達克期貨 (E-mini Nasdaq-100)")
+        try:
+            txf_night = fetch_taifex_night_session()
+            existing["txf_night"] = txf_night
+        except Exception as e:
+            print(f"  [WARN] TAIFEX Night update skipped: {e}")
+
+        existing["brent"] = brent_data
+        existing["nq"] = nq_data
+        existing["updated_at"] = now_str
+        existing["futures_updated_at"] = now_str
+        save_and_deploy(existing)
+        return
+
+    # 模式 2：美股收盤後更新 美股四大指數、台股 ADR、日韓指數 與 國際期貨
+    if args.mode == "global" and existing.get("taiex"):
+        print(f"[Mode: global] Post-US-Close update for US Indices, ADRs, Nikkei/KOSPI & Futures at {now_str}...")
+        parent_stock_map = {}
+        latest_date_iso = existing.get("twse_date")
+        hist_5d = existing.get("history_5d", {})
+        if latest_date_iso and latest_date_iso in hist_5d:
+            parent_stock_map = hist_5d[latest_date_iso].get("adr_parent_stocks", {})
+        if not parent_stock_map:
+            for item in existing.get("top15_value", []) + existing.get("top15_volume", []):
+                parent_stock_map[item["code"]] = item
+
+        brent_data = fetch_cnbc_symbol("@LCO.1", "布蘭特原油期貨 (Brent Crude)")
+        nq_data = fetch_cnbc_symbol("@ND.1", "小那斯達克期貨 (E-mini Nasdaq-100)")
+        global_markets = fetch_us_asia_indices_and_tw_adrs(parent_stock_map)
+
+        existing["brent"] = brent_data
+        existing["nq"] = nq_data
+        existing["global_markets"] = global_markets
+        existing["updated_at"] = now_str
+        existing["global_updated_at"] = now_str
+        save_and_deploy(existing)
+        return
+
+    # 模式 3 (預設 all)：每日 18:00 完整更新台股（保留最近 5 個交易日完整資料）+ 國際金融 + 期貨
+    print(f"[Mode: all] Full update (including last 5 TWSE trading days) at {now_str}...")
+    latest_date, taiex_series = fetch_taiex_history()
+
+    # 取得最近 5 個交易日清單 (由新到舊排序供前端切換)
+    last_5_entries = taiex_series[-5:] if len(taiex_series) >= 5 else taiex_series[:]
+    available_dates = [d["date"] for d in reversed(last_5_entries)]
+
+    history_5d = {}
+    latest_stock_map = {}
+    latest_snapshot = None
+
+    for idx_d, entry in enumerate(last_5_entries):
+        d_iso = entry["date"]
+        d_raw = d_iso.replace("-", "")
+        # 擷取截至該交易日為止的 taiex_series
+        cut_idx = next((i for i, x in enumerate(taiex_series) if x["date"] == d_iso), len(taiex_series) - 1)
+        series_up_to = taiex_series[: cut_idx + 1]
+        is_latest_day = (d_iso == last_5_entries[-1]["date"])
+
+        snap, s_map = fetch_single_twse_day_snapshot(
+            date_raw=d_raw,
+            date_iso=d_iso,
+            taiex_series_up_to_date=series_up_to,
+            use_cache=(not is_latest_day),
+        )
+        history_5d[d_iso] = snap
+        if is_latest_day:
+            latest_snapshot = snap
+            latest_stock_map = s_map or snap.get("adr_parent_stocks", {})
+
+    # 清理超過最近 5 個交易日的舊快取檔
+    keep_raw_dates = {d["date"].replace("-", "") for d in last_5_entries}
+    if os.path.exists(HISTORY_DIR):
+        for fname in os.listdir(HISTORY_DIR):
+            if fname.startswith("twse_") and fname.endswith(".json"):
+                f_raw = fname[5:-5]
+                if f_raw not in keep_raw_dates:
+                    try:
+                        os.remove(os.path.join(HISTORY_DIR, fname))
+                    except Exception:
+                        pass
+
+    time.sleep(0.35)
+    txf_night = fetch_taifex_night_session()
+
+    print("[7/8] Fetching Brent Crude Oil (@LCO.1) & E-mini Nasdaq-100 Futures (@ND.1)...")
+    brent_data = fetch_cnbc_symbol("@LCO.1", "布蘭特原油期貨 (Brent Crude)")
+    nq_data = fetch_cnbc_symbol("@ND.1", "小那斯達克期貨 (E-mini Nasdaq-100)")
+
+    global_markets = fetch_us_asia_indices_and_tw_adrs(latest_stock_map)
+
+    if not latest_snapshot:
+        latest_snapshot = {}
+
+    payload = {
+        "updated_at": now_str,
+        "twse_updated_at": now_str,
+        "global_updated_at": now_str,
+        "futures_updated_at": now_str,
+        "twse_date": latest_snapshot.get("twse_date", f"{latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:8]}"),
+        "twse_date_raw": latest_date,
+        "available_dates": available_dates,
+        "history_5d": history_5d,
+        "taiex": {
+            "latest": latest_snapshot.get("taiex_latest", taiex_series[-1] if taiex_series else {}),
+            "breadth": latest_snapshot.get("taiex_breadth", {}),
+            "series": taiex_series,
+        },
+        "institutional_summary": latest_snapshot.get("institutional_summary", {}),
+        "institutional_top50": latest_snapshot.get("institutional_top50", {}),
+        "top15_value": latest_snapshot.get("top15_value", []),
+        "top15_volume": latest_snapshot.get("top15_volume", []),
+        "concept_sectors": latest_snapshot.get("concept_sectors", {}),
+        "warrants": latest_snapshot.get("warrants", {}),
+        "txf_night": txf_night,
+        "brent": brent_data,
+        "nq": nq_data,
+        "global_markets": global_markets,
+    }
+
+    save_and_deploy(payload)
+
+
 if __name__ == "__main__":
     main()
-
