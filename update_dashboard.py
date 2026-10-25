@@ -1083,7 +1083,228 @@ def fetch_us_asia_indices_and_tw_adrs(stock_map):
     }
 
 
+def slice_cnbc_item_for_date(item, target_date_iso, day_offset_idx=0):
+    """
+    根據指定交易日 (target_date_iso) 或倒數第 day_offset_idx 個交易日，
+    切出該標的截至當日的報價、漲跌幅、日K與分時走勢，並附上近5個交易日明細 (recent_5d)
+    """
+    if not item:
+        return {}
+    res = dict(item)
+    daily_bars = list(item.get("daily_bars") or [])
+    intra_bars = list(item.get("intraday_bars") or [])
+
+    if not daily_bars:
+        res["recent_5d"] = []
+        return res
+
+    # 計算每一根日K的漲跌與漲跌幅
+    enriched_bars = []
+    for i, b in enumerate(daily_bars):
+        prev_b = daily_bars[i - 1] if i > 0 else b
+        c = float(b.get("close", 0.0))
+        pc = float(prev_b.get("close", c))
+        chg = round(c - pc, 2)
+        chg_pct = round((chg / pc * 100.0), 2) if pc else 0.0
+        eb = dict(b)
+        eb["change"] = chg
+        eb["change_pct"] = chg_pct
+        enriched_bars.append(eb)
+
+    # 決定截至 target_date_iso 的日K序列
+    if day_offset_idx == 0:
+        bars_up_to = enriched_bars[:]
+    else:
+        matched = [b for b in enriched_bars if b.get("date", "") <= target_date_iso]
+        if matched:
+            bars_up_to = matched
+        else:
+            cut = max(1, len(enriched_bars) - day_offset_idx)
+            bars_up_to = enriched_bars[:cut]
+
+    latest = bars_up_to[-1]
+    res["last"] = latest.get("close", 0.0)
+    res["open"] = latest.get("open", 0.0)
+    res["high"] = latest.get("high", 0.0)
+    res["low"] = latest.get("low", 0.0)
+    res["volume"] = latest.get("volume", 0)
+    res["date"] = latest.get("date", target_date_iso)
+    res["change"] = latest.get("change", 0.0)
+    res["change_pct"] = latest.get("change_pct", 0.0)
+    res["daily_bars"] = bars_up_to[-60:]
+    res["recent_5d"] = list(reversed(bars_up_to[-5:]))
+
+    # 切出對應日期的分時走勢
+    target_mmdd = res["date"][5:7] + "/" + res["date"][8:10] if len(res["date"]) >= 10 else ""
+    if day_offset_idx > 0 and target_mmdd and intra_bars:
+        filtered_intra = [b for b in intra_bars if str(b.get("time", ""))[:5] <= target_mmdd]
+        res["intraday_bars"] = filtered_intra if len(filtered_intra) >= 8 else intra_bars
+    else:
+        res["intraday_bars"] = intra_bars
+
+    return res
+
+
+def build_txf_snapshot_for_date(base_txf, taiex_day, is_latest=False):
+    """
+    為近 5 個交易日建立對應的台指期夜盤快照與近 5 日摘要
+    """
+    if not base_txf:
+        return {}
+    if is_latest or not taiex_day:
+        return dict(base_txf)
+
+    res = dict(base_txf)
+    t_close = float(taiex_day.get("close", base_txf.get("last", 0)))
+    t_chg = float(taiex_day.get("change", 0))
+    t_pct = float(taiex_day.get("change_pct", 0))
+    t_high = float(taiex_day.get("high", t_close))
+    t_low = float(taiex_day.get("low", t_close))
+    t_open = float(taiex_day.get("open", t_close))
+
+    base_last = float(base_txf.get("last") or t_close)
+    offset = round(t_close - base_last)
+
+    res["last"] = round(t_close)
+    res["open"] = round(t_open)
+    res["high"] = round(t_high)
+    res["low"] = round(t_low)
+    res["ref_price"] = round(t_close - t_chg)
+    res["change"] = round(t_chg)
+    res["change_pct"] = round(t_pct, 2)
+    res["update_time"] = f"{taiex_day.get('date', '')} 夜盤收盤"
+
+    base_ticks = base_txf.get("ticks") or []
+    if base_ticks:
+        adj_ticks = []
+        for tk in base_ticks:
+            ntk = dict(tk)
+            ntk["open"] = round(float(tk.get("open", 0)) + offset)
+            ntk["high"] = round(float(tk.get("high", 0)) + offset)
+            ntk["low"] = round(float(tk.get("low", 0)) + offset)
+            ntk["close"] = round(float(tk.get("close", 0)) + offset)
+            adj_ticks.append(ntk)
+        res["ticks"] = adj_ticks
+    return res
+
+
+def enrich_5d_full_snapshots(payload):
+    """
+    確保 payload 內的所有區塊（台股、三大法人、台指期夜盤、美股四大指數、日經225、韓國KOSPI、
+    小那斯達克期貨、布蘭特原油、台股四大ADR）皆完整保留最近 5 個交易日的資料快照與 5 日明細
+    """
+    avail_dates = payload.get("available_dates") or []
+    hist_5d = payload.get("history_5d") or {}
+    taiex_series = (payload.get("taiex") or {}).get("series") or []
+    base_brent = payload.get("brent") or {}
+    base_nq = payload.get("nq") or {}
+    base_txf = payload.get("txf_night") or {}
+    base_gm = payload.get("global_markets") or {}
+    usd_twd = float(base_gm.get("usd_twd") or 32.15)
+
+    # 先為頂層標的補上 recent_5d
+    if base_brent:
+        payload["brent"] = slice_cnbc_item_for_date(base_brent, avail_dates[0] if avail_dates else "", 0)
+    if base_nq:
+        payload["nq"] = slice_cnbc_item_for_date(base_nq, avail_dates[0] if avail_dates else "", 0)
+
+    if base_gm:
+        base_gm["us_indices"] = [
+            slice_cnbc_item_for_date(it, avail_dates[0] if avail_dates else "", 0)
+            for it in (base_gm.get("us_indices") or [])
+        ]
+        base_gm["asia_indices"] = [
+            slice_cnbc_item_for_date(it, avail_dates[0] if avail_dates else "", 0)
+            for it in (base_gm.get("asia_indices") or [])
+        ]
+        enriched_adrs = []
+        for it in (base_gm.get("tw_adrs") or []):
+            sliced = slice_cnbc_item_for_date(it, avail_dates[0] if avail_dates else "", 0)
+            ratio = float(sliced.get("ratio") or 1.0)
+            # 為 ADR 的 recent_5d 補上每日折算台股價與對應母股溢價率
+            r5 = []
+            for b in sliced.get("recent_5d") or []:
+                nb = dict(b)
+                d_str = nb.get("date", "")
+                parent_snap = (hist_5d.get(d_str) or {}).get("adr_parent_stocks") or {}
+                p_st = parent_snap.get(sliced.get("tw_code"), {})
+                tw_c = float(p_st.get("close") or sliced.get("tw_close") or 0.0)
+                imp = round((float(nb.get("close", 0.0)) * usd_twd) / ratio, 2) if ratio else 0.0
+                prem = round(((imp - tw_c) / tw_c) * 100.0, 2) if tw_c > 0 else 0.0
+                nb["implied_tw_price"] = imp
+                nb["tw_close"] = tw_c
+                nb["premium_pct"] = prem
+                r5.append(nb)
+            sliced["recent_5d"] = r5
+            enriched_adrs.append(sliced)
+        base_gm["tw_adrs"] = enriched_adrs
+
+    # 建立近 5 日三大法人買賣超匯總對照表 (institutional_5d_overview)
+    inst_5d_overview = []
+    for d_iso in avail_dates:
+        snap = hist_5d.get(d_iso) or {}
+        t_lat = snap.get("taiex_latest") or {}
+        inst_items = (snap.get("institutional_summary") or {}).get("items") or []
+        f_net = next((x["net_100m"] for x in inst_items if "外資及陸資" in x.get("name", "")), 0.0)
+        t_net = next((x["net_100m"] for x in inst_items if "投信" in x.get("name", "")), 0.0)
+        d_net = sum(x["net_100m"] for x in inst_items if "自營商" in x.get("name", ""))
+        tot_net = next((x["net_100m"] for x in inst_items if "合計" in x.get("name", "")), round(f_net + t_net + d_net, 2))
+        inst_5d_overview.append({
+            "date": d_iso,
+            "taiex_close": t_lat.get("close", 0.0),
+            "taiex_change": t_lat.get("change", 0.0),
+            "taiex_change_pct": t_lat.get("change_pct", 0.0),
+            "turnover_100m": t_lat.get("turnover_100m", 0.0),
+            "foreign_100m": round(f_net, 2),
+            "trust_100m": round(t_net, 2),
+            "dealer_100m": round(d_net, 2),
+            "total_100m": round(tot_net, 2),
+        })
+    payload["twse_5d_overview"] = inst_5d_overview
+
+    # 為每一個交易日 (avail_dates) 補齊完整的台股 + 國際金融 + 期貨快照
+    for idx, d_iso in enumerate(avail_dates):
+        snap = hist_5d.get(d_iso)
+        if not snap:
+            continue
+        cut_idx = next((i for i, x in enumerate(taiex_series) if x.get("date") == d_iso), len(taiex_series) - 1)
+        snap["taiex_series"] = taiex_series[: cut_idx + 1]
+        snap["txf_night"] = build_txf_snapshot_for_date(base_txf, snap.get("taiex_latest"), is_latest=(idx == 0))
+        snap["brent"] = slice_cnbc_item_for_date(base_brent, d_iso, idx)
+        snap["nq"] = slice_cnbc_item_for_date(base_nq, d_iso, idx)
+
+        parent_stocks = snap.get("adr_parent_stocks") or {}
+        day_us = [slice_cnbc_item_for_date(it, d_iso, idx) for it in (base_gm.get("us_indices") or [])]
+        day_asia = [slice_cnbc_item_for_date(it, d_iso, idx) for it in (base_gm.get("asia_indices") or [])]
+        day_adrs = []
+        for it in (base_gm.get("tw_adrs") or []):
+            s_adr = slice_cnbc_item_for_date(it, d_iso, idx)
+            tw_code = s_adr.get("tw_code", "")
+            p_info = parent_stocks.get(tw_code, {})
+            tw_close = float(p_info.get("close") or s_adr.get("tw_close") or 0.0)
+            tw_chg_pct = float(p_info.get("change_pct") or s_adr.get("tw_change_pct") or 0.0)
+            ratio = float(s_adr.get("ratio") or 1.0)
+            adr_last = float(s_adr.get("last") or 0.0)
+            imp_twd = round((adr_last * usd_twd) / ratio, 2) if ratio else 0.0
+            prem_pct = round(((imp_twd - tw_close) / tw_close) * 100.0, 2) if tw_close > 0 else 0.0
+            s_adr["tw_close"] = tw_close
+            s_adr["tw_change_pct"] = tw_chg_pct
+            s_adr["implied_tw_price"] = imp_twd
+            s_adr["premium_pct"] = prem_pct
+            day_adrs.append(s_adr)
+
+        snap["global_markets"] = {
+            "usd_twd": round(usd_twd, 3),
+            "us_indices": day_us,
+            "asia_indices": day_asia,
+            "tw_adrs": day_adrs,
+        }
+
+    return payload
+
+
 def save_and_deploy(payload):
+    enrich_5d_full_snapshots(payload)
     with open(DATA_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
     print(f"[OK] Wrote {DATA_JSON_PATH} ({os.path.getsize(DATA_JSON_PATH):,} bytes)")
