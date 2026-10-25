@@ -2,9 +2,18 @@ name: Update Taiwan & US Market Dashboard
 
 on:
   schedule:
-    # 每個工作天 (週一至週五) 台灣時間 18:00 (UTC 10:00) 自動執行
+    # 1. 台股每日盤後全量更新（含前 5 個交易日歷史）：每個工作天台灣時間 18:00 (UTC 10:00)
     - cron: '0 10 * * 1-5'
-  workflow_dispatch: # 支援在 GitHub Actions 頁面手動點擊一鍵更新
+    # 2. 美股與台股 ADR 收盤後更新：美股收盤後（台灣時間週二至週六 05:10 / UTC 21:10）
+    - cron: '10 21 * * 1-5'
+    # 3. 布蘭特原油與小那斯達克期貨每小時更新：開盤期間每小時第 5 分鐘執行
+    - cron: '5 * * * 1-5'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '更新模式 (all / global / futures)'
+        required: false
+        default: 'all'
 
 permissions:
   contents: write
@@ -21,18 +30,29 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Fetch latest Taiwan & US market data and render HTML
+      - name: Determine update mode and fetch data
         env:
           TZ: Asia/Taipei
+          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
+          INPUT_MODE: ${{ github.event.inputs.mode }}
         run: |
-          python3 update_dashboard.py
-          python3 render_html.py
+          if [ -n "$INPUT_MODE" ]; then
+            MODE="$INPUT_MODE"
+          elif [ "$GITHUB_EVENT_SCHEDULE" = "0 10 * * 1-5" ]; then
+            MODE="all"
+          elif [ "$GITHUB_EVENT_SCHEDULE" = "10 21 * * 1-5" ]; then
+            MODE="global"
+          else
+            MODE="futures"
+          fi
+          echo "Running update_dashboard.py --mode $MODE"
+          python3 update_dashboard.py --mode "$MODE"
 
-      - name: Commit and push updated index.html
+      - name: Commit and push updated dashboard & 5-day history
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html
+          git add index.html data.json history/ 2>/dev/null || git add index.html
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
