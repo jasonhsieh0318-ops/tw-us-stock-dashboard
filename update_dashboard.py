@@ -1134,6 +1134,48 @@ def slice_cnbc_item_for_date(item, target_date_iso, day_offset_idx=0):
     res["daily_bars"] = bars_up_to[-60:]
     res["recent_5d"] = list(reversed(bars_up_to[-5:]))
 
+    # 若為最新交易日 (day_offset_idx == 0) 且有更新的盤中分時K線 (例如亞洲股市當日或期貨即時報價)，
+    # 但 CNBC 1D bar 尚未寫入當日收盤棒時，自動以最新分時價格更新即時報價與當日K棒
+    if day_offset_idx == 0 and intra_bars:
+        last_intra = intra_bars[-1]
+        intra_mmdd = str(last_intra.get("time", ""))[:5]  # e.g. "10/26"
+        latest_mmdd = res["date"][5:7] + "/" + res["date"][8:10] if len(res["date"]) >= 10 else ""
+        if intra_mmdd and intra_mmdd != latest_mmdd:
+            yyyy = res["date"][:4] if len(res["date"]) >= 4 else str(datetime.datetime.now().year)
+            intra_date_iso = f"{yyyy}-{intra_mmdd[:2]}-{intra_mmdd[3:5]}"
+            if intra_date_iso > res["date"]:
+                same_day_intra = [b for b in intra_bars if str(b.get("time", ""))[:5] == intra_mmdd]
+                prev_close = float(latest.get("close", 0.0))
+                cur_c = float(last_intra.get("close", prev_close))
+                cur_o = float(same_day_intra[0].get("open", cur_c)) if same_day_intra else cur_c
+                cur_h = max(float(b.get("high", cur_c)) for b in same_day_intra) if same_day_intra else cur_c
+                cur_l = min(float(b.get("low", cur_c)) for b in same_day_intra) if same_day_intra else cur_c
+                cur_v = sum(int(b.get("volume", 0)) for b in same_day_intra)
+                chg = round(cur_c - prev_close, 2)
+                chg_pct = round((chg / prev_close * 100.0), 2) if prev_close else 0.0
+
+                live_bar = {
+                    "date": intra_date_iso,
+                    "open": cur_o,
+                    "high": cur_h,
+                    "low": cur_l,
+                    "close": cur_c,
+                    "volume": cur_v,
+                    "change": chg,
+                    "change_pct": chg_pct,
+                }
+                res["last"] = cur_c
+                res["open"] = cur_o
+                res["high"] = cur_h
+                res["low"] = cur_l
+                res["volume"] = cur_v
+                res["date"] = intra_date_iso
+                res["change"] = chg
+                res["change_pct"] = chg_pct
+                bars_up_to = bars_up_to + [live_bar]
+                res["daily_bars"] = bars_up_to[-60:]
+                res["recent_5d"] = list(reversed(bars_up_to[-5:]))
+
     # 切出對應日期的分時走勢
     target_mmdd = res["date"][5:7] + "/" + res["date"][8:10] if len(res["date"]) >= 10 else ""
     if day_offset_idx > 0 and target_mmdd and intra_bars:
@@ -1255,6 +1297,10 @@ def enrich_5d_full_snapshots(payload):
             "taiex_change": t_lat.get("change", 0.0),
             "taiex_change_pct": t_lat.get("change_pct", 0.0),
             "turnover_100m": t_lat.get("turnover_100m", 0.0),
+            "foreign_net_100m": round(f_net, 2),
+            "trust_net_100m": round(t_net, 2),
+            "dealer_net_100m": round(d_net, 2),
+            "total_net_100m": round(tot_net, 2),
             "foreign_100m": round(f_net, 2),
             "trust_100m": round(t_net, 2),
             "dealer_100m": round(d_net, 2),
