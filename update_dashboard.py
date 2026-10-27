@@ -359,6 +359,8 @@ def fetch_taiex_history():
                 }
 
     series = [series_map[k] for k in sorted(series_map.keys())]
+    if series:
+        latest_date = series[-1]["date"].replace("-", "")
     return latest_date, series
 
 
@@ -1349,7 +1351,7 @@ def enrich_5d_full_snapshots(payload):
     return payload
 
 
-def save_and_deploy(payload):
+def save_and_deploy(payload, skip_api_deploy=False):
     enrich_5d_full_snapshots(payload)
     with open(DATA_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
@@ -1360,6 +1362,9 @@ def save_and_deploy(payload):
         import render_html
         render_html.build_html(payload, INDEX_HTML_PATH)
         print(f"[OK] Built {INDEX_HTML_PATH} ({os.path.getsize(INDEX_HTML_PATH):,} bytes)")
+
+    if skip_api_deploy:
+        return
 
     gh_cfg_path = os.path.join(BASE_DIR, "github_config.json")
     if os.path.exists(gh_cfg_path):
@@ -1396,6 +1401,11 @@ def main():
         default="all",
         help="all: 每日18:00完整更新(含台股近5日歷史); global: 美股收盤後更新美股/ADR/日韓/期貨; futures: 每小時更新布蘭特原油與小那斯達克期貨",
     )
+    parser.add_argument(
+        "--skip-api-deploy",
+        action="store_true",
+        help="略過內建 GitHub API 部署 (供 GitHub Actions 使用 git commit & push 時呼叫)",
+    )
     args = parser.parse_args()
 
     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -1416,7 +1426,7 @@ def main():
         existing["nq"] = nq_data
         existing["updated_at"] = now_str
         existing["futures_updated_at"] = now_str
-        save_and_deploy(existing)
+        save_and_deploy(existing, skip_api_deploy=args.skip_api_deploy)
         return
 
     # 模式 2：美股收盤後更新 美股四大指數、台股 ADR、日韓指數 與 國際期貨
@@ -1440,7 +1450,7 @@ def main():
         existing["global_markets"] = global_markets
         existing["updated_at"] = now_str
         existing["global_updated_at"] = now_str
-        save_and_deploy(existing)
+        save_and_deploy(existing, skip_api_deploy=args.skip_api_deploy)
         return
 
     # 模式 3 (預設 all)：每日 18:00 完整更新台股（保留最近 5 個交易日完整資料）+ 國際金融 + 期貨
@@ -1524,7 +1534,7 @@ def main():
         "global_markets": global_markets,
     }
 
-    save_and_deploy(payload)
+    save_and_deploy(payload, skip_api_deploy=args.skip_api_deploy)
 
 
 if __name__ == "__main__":
