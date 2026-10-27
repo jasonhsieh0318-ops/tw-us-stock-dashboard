@@ -43,10 +43,17 @@ jobs:
           elif [ "$GITHUB_EVENT_SCHEDULE" = "10 21 * * 1-5" ]; then
             MODE="global"
           else
-            MODE="futures"
+            CUR_HOUR=$(TZ=Asia/Taipei date +'%H')
+            if [ "$CUR_HOUR" = "18" ] || [ "$CUR_HOUR" = "19" ]; then
+              MODE="all"
+            elif [ "$CUR_HOUR" = "05" ] || [ "$CUR_HOUR" = "06" ]; then
+              MODE="global"
+            else
+              MODE="futures"
+            fi
           fi
           echo "Running update_dashboard.py --mode $MODE"
-          python3 update_dashboard.py --mode "$MODE"
+          python3 update_dashboard.py --mode "$MODE" --skip-api-deploy
 
       - name: Commit and push updated dashboard & 5-day history
         run: |
