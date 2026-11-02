@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-11-03 05:42:25",
+  "updated_at": "2026-11-03 06:37:35",
   "twse_updated_at": "2026-11-02 19:47:35",
-  "global_updated_at": "2026-11-03 05:42:25",
+  "global_updated_at": "2026-11-03 06:37:35",
   "futures_updated_at": "2026-11-03 04:40:14",
   "twse_date": "2026-11-02",
   "twse_date_raw": "20261102",
@@ -26574,10 +26574,10 @@
           {
             "time": "11/02 16:30",
             "open": 104.11,
-            "high": 104.41,
+            "high": 104.32,
             "low": 104.04,
-            "close": 104.36,
-            "volume": 572
+            "close": 104.32,
+            "volume": 244
           }
         ],
         "recent_5d": [
@@ -29092,6 +29092,14 @@
                 "time": "11/02 16:00",
                 "open": 51995.89,
                 "high": 51995.89,
+                "low": 51983.98,
+                "close": 51983.98,
+                "volume": 0
+              },
+              {
+                "time": "11/02 16:30",
+                "open": 51983.98,
+                "high": 51983.98,
                 "low": 51983.98,
                 "close": 51983.98,
                 "volume": 0
@@ -39032,14 +39040,6 @@
             ],
             "intraday_bars": [
               {
-                "time": "10/28 15:30",
-                "open": 18.825,
-                "high": 18.9,
-                "low": 18.765,
-                "close": 18.85,
-                "volume": 2287927
-              },
-              {
                 "time": "10/28 16:00",
                 "open": 18.855,
                 "high": 18.94,
@@ -39798,6 +39798,14 @@
                 "low": 16.37,
                 "close": 16.39,
                 "volume": 3093171
+              },
+              {
+                "time": "11/02 16:30",
+                "open": 16.4,
+                "high": 16.4,
+                "low": 16.4,
+                "close": 16.4,
+                "volume": 100
               }
             ],
             "code": "UMC",
@@ -66446,10 +66454,10 @@
           {
             "time": "11/02 16:30",
             "open": 104.11,
-            "high": 104.41,
+            "high": 104.32,
             "low": 104.04,
-            "close": 104.36,
-            "volume": 572
+            "close": 104.32,
+            "volume": 244
           }
         ],
         "recent_5d": [
@@ -76629,14 +76637,6 @@
               }
             ],
             "intraday_bars": [
-              {
-                "time": "10/28 15:30",
-                "open": 18.825,
-                "high": 18.9,
-                "low": 18.765,
-                "close": 18.85,
-                "volume": 2287927
-              },
               {
                 "time": "10/28 16:00",
                 "open": 18.855,
@@ -112051,14 +112051,6 @@
               }
             ],
             "intraday_bars": [
-              {
-                "time": "10/28 15:30",
-                "open": 18.825,
-                "high": 18.9,
-                "low": 18.765,
-                "close": 18.85,
-                "volume": 2287927
-              },
               {
                 "time": "10/28 16:00",
                 "open": 18.855,
@@ -149689,14 +149681,6 @@
             ],
             "intraday_bars": [
               {
-                "time": "10/28 15:30",
-                "open": 18.825,
-                "high": 18.9,
-                "low": 18.765,
-                "close": 18.85,
-                "volume": 2287927
-              },
-              {
                 "time": "10/28 16:00",
                 "open": 18.855,
                 "high": 18.94,
@@ -175299,14 +175283,14 @@
       "brent": {
         "symbol": "@LCO.1",
         "name": "布蘭特原油期貨 (Brent Crude)",
-        "last": 104.36,
+        "last": 104.32,
         "open": 109.94,
         "high": 110.57,
         "low": 103.28,
-        "volume": 410207,
+        "volume": 409879,
         "date": "2026-11-02",
-        "change": -13.28,
-        "change_pct": -11.29,
+        "change": -13.32,
+        "change_pct": -11.32,
         "daily_bars": [
           {
             "date": "2026-08-11",
@@ -175903,10 +175887,10 @@
             "open": 109.94,
             "high": 110.57,
             "low": 103.28,
-            "close": 104.36,
-            "volume": 410207,
-            "change": -13.28,
-            "change_pct": -11.29
+            "close": 104.32,
+            "volume": 409879,
+            "change": -13.32,
+            "change_pct": -11.32
           }
         ],
         "intraday_bars": [
@@ -176673,10 +176657,10 @@
           {
             "time": "11/02 16:30",
             "open": 104.11,
-            "high": 104.41,
+            "high": 104.32,
             "low": 104.04,
-            "close": 104.36,
-            "volume": 572
+            "close": 104.32,
+            "volume": 244
           }
         ],
         "recent_5d": [
@@ -176685,10 +176669,10 @@
             "open": 109.94,
             "high": 110.57,
             "low": 103.28,
-            "close": 104.36,
-            "volume": 410207,
-            "change": -13.28,
-            "change_pct": -11.29
+            "close": 104.32,
+            "volume": 409879,
+            "change": -13.32,
+            "change_pct": -11.32
           },
           {
             "date": "2026-10-30",
@@ -179261,6 +179245,14 @@
                 "time": "11/02 16:00",
                 "open": 51995.89,
                 "high": 51995.89,
+                "low": 51983.98,
+                "close": 51983.98,
+                "volume": 0
+              },
+              {
+                "time": "11/02 16:30",
+                "open": 51983.98,
+                "high": 51983.98,
                 "low": 51983.98,
                 "close": 51983.98,
                 "volume": 0
@@ -188949,14 +188941,14 @@
           {
             "symbol": "UMC",
             "name": "聯電 ADR",
-            "last": 16.39,
+            "last": 16.4,
             "open": 17.04,
             "high": 17.28,
             "low": 16.34,
-            "volume": 9732408,
+            "volume": 9732508,
             "date": "2026-11-02",
-            "change": -0.29,
-            "change_pct": -1.74,
+            "change": -0.28,
+            "change_pct": -1.68,
             "daily_bars": [
               {
                 "date": "2026-08-10",
@@ -189553,21 +189545,13 @@
                 "open": 17.04,
                 "high": 17.28,
                 "low": 16.34,
-                "close": 16.39,
-                "volume": 9732408,
-                "change": -0.29,
-                "change_pct": -1.74
+                "close": 16.4,
+                "volume": 9732508,
+                "change": -0.28,
+                "change_pct": -1.68
               }
             ],
             "intraday_bars": [
-              {
-                "time": "10/28 15:30",
-                "open": 18.825,
-                "high": 18.9,
-                "low": 18.765,
-                "close": 18.85,
-                "volume": 2287927
-              },
               {
                 "time": "10/28 16:00",
                 "open": 18.855,
@@ -190327,6 +190311,14 @@
                 "low": 16.37,
                 "close": 16.39,
                 "volume": 3093171
+              },
+              {
+                "time": "11/02 16:30",
+                "open": 16.4,
+                "high": 16.4,
+                "low": 16.4,
+                "close": 16.4,
+                "volume": 100
               }
             ],
             "code": "UMC",
@@ -190336,18 +190328,18 @@
             "tw_change_pct": -1.35,
             "ratio": 5.0,
             "usd_twd": 32.605,
-            "implied_tw_price": 106.88,
-            "premium_pct": -2.84,
+            "implied_tw_price": 106.94,
+            "premium_pct": -2.78,
             "recent_5d": [
               {
                 "date": "2026-11-02",
                 "open": 17.04,
                 "high": 17.28,
                 "low": 16.34,
-                "close": 16.39,
-                "volume": 9732408,
-                "change": -0.29,
-                "change_pct": -1.74
+                "close": 16.4,
+                "volume": 9732508,
+                "change": -0.28,
+                "change_pct": -1.68
               },
               {
                 "date": "2026-10-30",
@@ -215288,14 +215280,14 @@
   "brent": {
     "symbol": "@LCO.1",
     "name": "布蘭特原油期貨 (Brent Crude)",
-    "last": 104.36,
+    "last": 104.32,
     "open": 109.94,
     "high": 110.57,
     "low": 103.28,
-    "volume": 410207,
+    "volume": 409879,
     "date": "2026-11-02",
-    "change": -13.28,
-    "change_pct": -11.29,
+    "change": -13.32,
+    "change_pct": -11.32,
     "daily_bars": [
       {
         "date": "2026-08-11",
@@ -215892,10 +215884,10 @@
         "open": 109.94,
         "high": 110.57,
         "low": 103.28,
-        "close": 104.36,
-        "volume": 410207,
-        "change": -13.28,
-        "change_pct": -11.29
+        "close": 104.32,
+        "volume": 409879,
+        "change": -13.32,
+        "change_pct": -11.32
       }
     ],
     "intraday_bars": [
@@ -216662,10 +216654,10 @@
       {
         "time": "11/02 16:30",
         "open": 104.11,
-        "high": 104.41,
+        "high": 104.32,
         "low": 104.04,
-        "close": 104.36,
-        "volume": 572
+        "close": 104.32,
+        "volume": 244
       }
     ],
     "recent_5d": [
@@ -216674,10 +216666,10 @@
         "open": 109.94,
         "high": 110.57,
         "low": 103.28,
-        "close": 104.36,
-        "volume": 410207,
-        "change": -13.28,
-        "change_pct": -11.29
+        "close": 104.32,
+        "volume": 409879,
+        "change": -13.32,
+        "change_pct": -11.32
       },
       {
         "date": "2026-10-30",
@@ -219250,6 +219242,14 @@
             "time": "11/02 16:00",
             "open": 51995.89,
             "high": 51995.89,
+            "low": 51983.98,
+            "close": 51983.98,
+            "volume": 0
+          },
+          {
+            "time": "11/02 16:30",
+            "open": 51983.98,
+            "high": 51983.98,
             "low": 51983.98,
             "close": 51983.98,
             "volume": 0
@@ -228983,14 +228983,14 @@
       {
         "symbol": "UMC",
         "name": "聯電 ADR",
-        "last": 16.39,
+        "last": 16.4,
         "open": 17.04,
         "high": 17.28,
         "low": 16.34,
-        "volume": 9732408,
+        "volume": 9732508,
         "date": "2026-11-02",
-        "change": -0.29,
-        "change_pct": -1.74,
+        "change": -0.28,
+        "change_pct": -1.68,
         "daily_bars": [
           {
             "date": "2026-08-10",
@@ -229587,21 +229587,13 @@
             "open": 17.04,
             "high": 17.28,
             "low": 16.34,
-            "close": 16.39,
-            "volume": 9732408,
-            "change": -0.29,
-            "change_pct": -1.74
+            "close": 16.4,
+            "volume": 9732508,
+            "change": -0.28,
+            "change_pct": -1.68
           }
         ],
         "intraday_bars": [
-          {
-            "time": "10/28 15:30",
-            "open": 18.825,
-            "high": 18.9,
-            "low": 18.765,
-            "close": 18.85,
-            "volume": 2287927
-          },
           {
             "time": "10/28 16:00",
             "open": 18.855,
@@ -230361,6 +230353,14 @@
             "low": 16.37,
             "close": 16.39,
             "volume": 3093171
+          },
+          {
+            "time": "11/02 16:30",
+            "open": 16.4,
+            "high": 16.4,
+            "low": 16.4,
+            "close": 16.4,
+            "volume": 100
           }
         ],
         "code": "UMC",
@@ -230378,13 +230378,13 @@
             "open": 17.04,
             "high": 17.28,
             "low": 16.34,
-            "close": 16.39,
-            "volume": 9732408,
-            "change": -0.29,
-            "change_pct": -1.74,
-            "implied_tw_price": 106.88,
+            "close": 16.4,
+            "volume": 9732508,
+            "change": -0.28,
+            "change_pct": -1.68,
+            "implied_tw_price": 106.94,
             "tw_close": 110.0,
-            "premium_pct": -2.84
+            "premium_pct": -2.78
           },
           {
             "date": "2026-10-30",
