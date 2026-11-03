@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-11-04 05:46:32",
+  "updated_at": "2026-11-04 06:37:35",
   "twse_updated_at": "2026-11-03 19:45:41",
-  "global_updated_at": "2026-11-04 05:46:32",
+  "global_updated_at": "2026-11-04 06:37:35",
   "futures_updated_at": "2026-11-04 04:42:05",
   "twse_date": "2026-11-03",
   "twse_date_raw": "20261103",
@@ -35991,10 +35991,10 @@
               {
                 "time": "11/03 16:30",
                 "open": 409.59,
-                "high": 412.99,
+                "high": 411.8053,
                 "low": 404.8,
-                "close": 412.49,
-                "volume": 22722
+                "close": 411.8053,
+                "volume": 11444
               }
             ],
             "code": "TSM",
@@ -73673,10 +73673,10 @@
               {
                 "time": "11/03 16:30",
                 "open": 409.59,
-                "high": 412.99,
+                "high": 411.8053,
                 "low": 404.8,
-                "close": 412.49,
-                "volume": 22722
+                "close": 411.8053,
+                "volume": 11444
               }
             ],
             "code": "TSM",
@@ -186913,14 +186913,14 @@
           {
             "symbol": "TSM",
             "name": "台積電 ADR",
-            "last": 412.49,
+            "last": 411.8053,
             "open": 397.15,
-            "high": 412.99,
+            "high": 411.8053,
             "low": 394.92,
-            "volume": 22119966,
+            "volume": 22108688,
             "date": "2026-11-03",
-            "change": 13.86,
-            "change_pct": 3.48,
+            "change": 13.18,
+            "change_pct": 3.31,
             "daily_bars": [
               {
                 "date": "2026-08-11",
@@ -187515,12 +187515,12 @@
               {
                 "date": "2026-11-03",
                 "open": 397.15,
-                "high": 412.99,
+                "high": 411.8053,
                 "low": 394.92,
-                "close": 412.49,
-                "volume": 22119966,
-                "change": 13.86,
-                "change_pct": 3.48
+                "close": 411.8053,
+                "volume": 22108688,
+                "change": 13.18,
+                "change_pct": 3.31
               }
             ],
             "intraday_bars": [
@@ -188287,10 +188287,10 @@
               {
                 "time": "11/03 16:30",
                 "open": 409.59,
-                "high": 412.99,
+                "high": 411.8053,
                 "low": 404.8,
-                "close": 412.49,
-                "volume": 22722
+                "close": 411.8053,
+                "volume": 11444
               }
             ],
             "code": "TSM",
@@ -188300,18 +188300,18 @@
             "tw_change_pct": -1.5,
             "ratio": 5.0,
             "usd_twd": 32.603,
-            "implied_tw_price": 2689.68,
-            "premium_pct": 17.2,
+            "implied_tw_price": 2685.22,
+            "premium_pct": 17.0,
             "recent_5d": [
               {
                 "date": "2026-11-03",
                 "open": 397.15,
-                "high": 412.99,
+                "high": 411.8053,
                 "low": 394.92,
-                "close": 412.49,
-                "volume": 22119966,
-                "change": 13.86,
-                "change_pct": 3.48
+                "close": 411.8053,
+                "volume": 22108688,
+                "change": 13.18,
+                "change_pct": 3.31
               },
               {
                 "date": "2026-11-02",
@@ -227150,14 +227150,14 @@
       {
         "symbol": "TSM",
         "name": "台積電 ADR",
-        "last": 412.49,
+        "last": 411.8053,
         "open": 397.15,
-        "high": 412.99,
+        "high": 411.8053,
         "low": 394.92,
-        "volume": 22119966,
+        "volume": 22108688,
         "date": "2026-11-03",
-        "change": 13.86,
-        "change_pct": 3.48,
+        "change": 13.18,
+        "change_pct": 3.31,
         "daily_bars": [
           {
             "date": "2026-08-11",
@@ -227752,12 +227752,12 @@
           {
             "date": "2026-11-03",
             "open": 397.15,
-            "high": 412.99,
+            "high": 411.8053,
             "low": 394.92,
-            "close": 412.49,
-            "volume": 22119966,
-            "change": 13.86,
-            "change_pct": 3.48
+            "close": 411.8053,
+            "volume": 22108688,
+            "change": 13.18,
+            "change_pct": 3.31
           }
         ],
         "intraday_bars": [
@@ -228524,10 +228524,10 @@
           {
             "time": "11/03 16:30",
             "open": 409.59,
-            "high": 412.99,
+            "high": 411.8053,
             "low": 404.8,
-            "close": 412.49,
-            "volume": 22722
+            "close": 411.8053,
+            "volume": 11444
           }
         ],
         "code": "TSM",
@@ -228543,15 +228543,15 @@
           {
             "date": "2026-11-03",
             "open": 397.15,
-            "high": 412.99,
+            "high": 411.8053,
             "low": 394.92,
-            "close": 412.49,
-            "volume": 22119966,
-            "change": 13.86,
-            "change_pct": 3.48,
-            "implied_tw_price": 2689.68,
+            "close": 411.8053,
+            "volume": 22108688,
+            "change": 13.18,
+            "change_pct": 3.31,
+            "implied_tw_price": 2685.22,
             "tw_close": 2295.0,
-            "premium_pct": 17.2
+            "premium_pct": 17.0
           },
           {
             "date": "2026-11-02",
