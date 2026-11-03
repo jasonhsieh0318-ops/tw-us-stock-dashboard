@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-11-04 05:39:16",
+  "updated_at": "2026-11-04 05:46:32",
   "twse_updated_at": "2026-11-03 19:45:41",
-  "global_updated_at": "2026-11-04 05:39:16",
+  "global_updated_at": "2026-11-04 05:46:32",
   "futures_updated_at": "2026-11-04 04:42:05",
   "twse_date": "2026-11-03",
   "twse_date_raw": "20261103",
@@ -27982,10 +27982,10 @@
           {
             "time": "11/03 16:30",
             "open": 28406.75,
-            "high": 28429.75,
+            "high": 28449.5,
             "low": 28396.5,
-            "close": 28420.75,
-            "volume": 2852
+            "close": 28443.0,
+            "volume": 5256
           }
         ],
         "recent_5d": [
@@ -35991,10 +35991,10 @@
               {
                 "time": "11/03 16:30",
                 "open": 409.59,
-                "high": 411.8053,
+                "high": 412.99,
                 "low": 404.8,
-                "close": 411.8053,
-                "volume": 11444
+                "close": 412.49,
+                "volume": 22722
               }
             ],
             "code": "TSM",
@@ -67682,10 +67682,10 @@
           {
             "time": "11/03 16:30",
             "open": 28406.75,
-            "high": 28429.75,
+            "high": 28449.5,
             "low": 28396.5,
-            "close": 28420.75,
-            "volume": 2852
+            "close": 28443.0,
+            "volume": 5256
           }
         ],
         "recent_5d": [
@@ -73673,10 +73673,10 @@
               {
                 "time": "11/03 16:30",
                 "open": 409.59,
-                "high": 411.8053,
+                "high": 412.99,
                 "low": 404.8,
-                "close": 411.8053,
-                "volume": 11444
+                "close": 412.49,
+                "volume": 22722
               }
             ],
             "code": "TSM",
@@ -104773,10 +104773,10 @@
           {
             "time": "11/03 16:30",
             "open": 28406.75,
-            "high": 28429.75,
+            "high": 28449.5,
             "low": 28396.5,
-            "close": 28420.75,
-            "volume": 2852
+            "close": 28443.0,
+            "volume": 5256
           }
         ],
         "recent_5d": [
@@ -178634,14 +178634,14 @@
       "nq": {
         "symbol": "@ND.1",
         "name": "小那斯達克期貨 (E-mini Nasdaq-100)",
-        "last": 28420.75,
+        "last": 28443.0,
         "open": 28124.0,
-        "high": 28443.5,
+        "high": 28449.5,
         "low": 28038.25,
-        "volume": 587570,
+        "volume": 589974,
         "date": "2026-11-03",
-        "change": 293.25,
-        "change_pct": 1.04,
+        "change": 315.5,
+        "change_pct": 1.12,
         "daily_bars": [
           {
             "date": "2026-08-11",
@@ -179236,12 +179236,12 @@
           {
             "date": "2026-11-03",
             "open": 28124.0,
-            "high": 28443.5,
+            "high": 28449.5,
             "low": 28038.25,
-            "close": 28420.75,
-            "volume": 587570,
-            "change": 293.25,
-            "change_pct": 1.04
+            "close": 28443.0,
+            "volume": 589974,
+            "change": 315.5,
+            "change_pct": 1.12
           }
         ],
         "intraday_bars": [
@@ -180008,22 +180008,22 @@
           {
             "time": "11/03 16:30",
             "open": 28406.75,
-            "high": 28429.75,
+            "high": 28449.5,
             "low": 28396.5,
-            "close": 28420.75,
-            "volume": 2852
+            "close": 28443.0,
+            "volume": 5256
           }
         ],
         "recent_5d": [
           {
             "date": "2026-11-03",
             "open": 28124.0,
-            "high": 28443.5,
+            "high": 28449.5,
             "low": 28038.25,
-            "close": 28420.75,
-            "volume": 587570,
-            "change": 293.25,
-            "change_pct": 1.04
+            "close": 28443.0,
+            "volume": 589974,
+            "change": 315.5,
+            "change_pct": 1.12
           },
           {
             "date": "2026-11-02",
@@ -186913,14 +186913,14 @@
           {
             "symbol": "TSM",
             "name": "台積電 ADR",
-            "last": 411.8053,
+            "last": 412.49,
             "open": 397.15,
-            "high": 411.8053,
+            "high": 412.99,
             "low": 394.92,
-            "volume": 22108688,
+            "volume": 22119966,
             "date": "2026-11-03",
-            "change": 13.18,
-            "change_pct": 3.31,
+            "change": 13.86,
+            "change_pct": 3.48,
             "daily_bars": [
               {
                 "date": "2026-08-11",
@@ -187515,12 +187515,12 @@
               {
                 "date": "2026-11-03",
                 "open": 397.15,
-                "high": 411.8053,
+                "high": 412.99,
                 "low": 394.92,
-                "close": 411.8053,
-                "volume": 22108688,
-                "change": 13.18,
-                "change_pct": 3.31
+                "close": 412.49,
+                "volume": 22119966,
+                "change": 13.86,
+                "change_pct": 3.48
               }
             ],
             "intraday_bars": [
@@ -188287,10 +188287,10 @@
               {
                 "time": "11/03 16:30",
                 "open": 409.59,
-                "high": 411.8053,
+                "high": 412.99,
                 "low": 404.8,
-                "close": 411.8053,
-                "volume": 11444
+                "close": 412.49,
+                "volume": 22722
               }
             ],
             "code": "TSM",
@@ -188300,18 +188300,18 @@
             "tw_change_pct": -1.5,
             "ratio": 5.0,
             "usd_twd": 32.603,
-            "implied_tw_price": 2685.22,
-            "premium_pct": 17.0,
+            "implied_tw_price": 2689.68,
+            "premium_pct": 17.2,
             "recent_5d": [
               {
                 "date": "2026-11-03",
                 "open": 397.15,
-                "high": 411.8053,
+                "high": 412.99,
                 "low": 394.92,
-                "close": 411.8053,
-                "volume": 22108688,
-                "change": 13.18,
-                "change_pct": 3.31
+                "close": 412.49,
+                "volume": 22119966,
+                "change": 13.86,
+                "change_pct": 3.48
               },
               {
                 "date": "2026-11-02",
@@ -218871,14 +218871,14 @@
   "nq": {
     "symbol": "@ND.1",
     "name": "小那斯達克期貨 (E-mini Nasdaq-100)",
-    "last": 28420.75,
+    "last": 28443.0,
     "open": 28124.0,
-    "high": 28443.5,
+    "high": 28449.5,
     "low": 28038.25,
-    "volume": 587570,
+    "volume": 589974,
     "date": "2026-11-03",
-    "change": 293.25,
-    "change_pct": 1.04,
+    "change": 315.5,
+    "change_pct": 1.12,
     "daily_bars": [
       {
         "date": "2026-08-11",
@@ -219473,12 +219473,12 @@
       {
         "date": "2026-11-03",
         "open": 28124.0,
-        "high": 28443.5,
+        "high": 28449.5,
         "low": 28038.25,
-        "close": 28420.75,
-        "volume": 587570,
-        "change": 293.25,
-        "change_pct": 1.04
+        "close": 28443.0,
+        "volume": 589974,
+        "change": 315.5,
+        "change_pct": 1.12
       }
     ],
     "intraday_bars": [
@@ -220245,22 +220245,22 @@
       {
         "time": "11/03 16:30",
         "open": 28406.75,
-        "high": 28429.75,
+        "high": 28449.5,
         "low": 28396.5,
-        "close": 28420.75,
-        "volume": 2852
+        "close": 28443.0,
+        "volume": 5256
       }
     ],
     "recent_5d": [
       {
         "date": "2026-11-03",
         "open": 28124.0,
-        "high": 28443.5,
+        "high": 28449.5,
         "low": 28038.25,
-        "close": 28420.75,
-        "volume": 587570,
-        "change": 293.25,
-        "change_pct": 1.04
+        "close": 28443.0,
+        "volume": 589974,
+        "change": 315.5,
+        "change_pct": 1.12
       },
       {
         "date": "2026-11-02",
@@ -227150,14 +227150,14 @@
       {
         "symbol": "TSM",
         "name": "台積電 ADR",
-        "last": 411.8053,
+        "last": 412.49,
         "open": 397.15,
-        "high": 411.8053,
+        "high": 412.99,
         "low": 394.92,
-        "volume": 22108688,
+        "volume": 22119966,
         "date": "2026-11-03",
-        "change": 13.18,
-        "change_pct": 3.31,
+        "change": 13.86,
+        "change_pct": 3.48,
         "daily_bars": [
           {
             "date": "2026-08-11",
@@ -227752,12 +227752,12 @@
           {
             "date": "2026-11-03",
             "open": 397.15,
-            "high": 411.8053,
+            "high": 412.99,
             "low": 394.92,
-            "close": 411.8053,
-            "volume": 22108688,
-            "change": 13.18,
-            "change_pct": 3.31
+            "close": 412.49,
+            "volume": 22119966,
+            "change": 13.86,
+            "change_pct": 3.48
           }
         ],
         "intraday_bars": [
@@ -228524,10 +228524,10 @@
           {
             "time": "11/03 16:30",
             "open": 409.59,
-            "high": 411.8053,
+            "high": 412.99,
             "low": 404.8,
-            "close": 411.8053,
-            "volume": 11444
+            "close": 412.49,
+            "volume": 22722
           }
         ],
         "code": "TSM",
@@ -228543,15 +228543,15 @@
           {
             "date": "2026-11-03",
             "open": 397.15,
-            "high": 411.8053,
+            "high": 412.99,
             "low": 394.92,
-            "close": 411.8053,
-            "volume": 22108688,
-            "change": 13.18,
-            "change_pct": 3.31,
-            "implied_tw_price": 2685.22,
+            "close": 412.49,
+            "volume": 22119966,
+            "change": 13.86,
+            "change_pct": 3.48,
+            "implied_tw_price": 2689.68,
             "tw_close": 2295.0,
-            "premium_pct": 17.0
+            "premium_pct": 17.2
           },
           {
             "date": "2026-11-02",
