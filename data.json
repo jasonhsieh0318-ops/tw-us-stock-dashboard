@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-11-04 09:54:21",
+  "updated_at": "2026-11-04 10:44:43",
   "twse_updated_at": "2026-11-03 19:45:41",
   "global_updated_at": "2026-11-04 06:37:35",
-  "futures_updated_at": "2026-11-04 09:54:21",
+  "futures_updated_at": "2026-11-04 10:44:43",
   "twse_date": "2026-11-03",
   "twse_date_raw": "20261103",
   "available_dates": [
@@ -25386,24 +25386,14 @@
         "change_pct": 1.26,
         "daily_bars": [
           {
-            "date": "2026-08-11",
-            "open": 87.74,
-            "high": 90.03,
-            "low": 86.6,
-            "close": 88.91,
-            "volume": 332780,
-            "change": 0.0,
-            "change_pct": 0.0
-          },
-          {
             "date": "2026-08-12",
             "open": 89.17,
             "high": 90.07,
             "low": 88.1,
             "close": 88.98,
             "volume": 274843,
-            "change": 0.07,
-            "change_pct": 0.08
+            "change": 0.0,
+            "change_pct": 0.0
           },
           {
             "date": "2026-08-13",
@@ -65200,24 +65190,14 @@
         "change_pct": -0.38,
         "daily_bars": [
           {
-            "date": "2026-08-11",
-            "open": 87.74,
-            "high": 90.03,
-            "low": 86.6,
-            "close": 88.91,
-            "volume": 332780,
-            "change": 0.0,
-            "change_pct": 0.0
-          },
-          {
             "date": "2026-08-12",
             "open": 89.17,
             "high": 90.07,
             "low": 88.1,
             "close": 88.98,
             "volume": 274843,
-            "change": 0.07,
-            "change_pct": 0.08
+            "change": 0.0,
+            "change_pct": 0.0
           },
           {
             "date": "2026-08-13",
@@ -102405,24 +102385,14 @@
         "change_pct": 2.4,
         "daily_bars": [
           {
-            "date": "2026-08-11",
-            "open": 87.74,
-            "high": 90.03,
-            "low": 86.6,
-            "close": 88.91,
-            "volume": 332780,
-            "change": 0.0,
-            "change_pct": 0.0
-          },
-          {
             "date": "2026-08-12",
             "open": 89.17,
             "high": 90.07,
             "low": 88.1,
             "close": 88.98,
             "volume": 274843,
-            "change": 0.07,
-            "change_pct": 0.08
+            "change": 0.0,
+            "change_pct": 0.0
           },
           {
             "date": "2026-08-13",
@@ -139305,24 +139275,14 @@
         "change_pct": -10.94,
         "daily_bars": [
           {
-            "date": "2026-08-11",
-            "open": 87.74,
-            "high": 90.03,
-            "low": 86.6,
-            "close": 88.91,
-            "volume": 332780,
-            "change": 0.0,
-            "change_pct": 0.0
-          },
-          {
             "date": "2026-08-12",
             "open": 89.17,
             "high": 90.07,
             "low": 88.1,
             "close": 88.98,
             "volume": 274843,
-            "change": 0.07,
-            "change_pct": 0.08
+            "change": 0.0,
+            "change_pct": 0.0
           },
           {
             "date": "2026-08-13",
@@ -177798,14 +177758,14 @@
       "brent": {
         "symbol": "@LCO.1",
         "name": "布蘭特原油期貨 (Brent Crude)",
-        "last": 103.38,
-        "open": 105.32,
+        "last": 103.6,
+        "open": 104.45,
         "high": 107.24,
         "low": 100.8,
-        "volume": 395365,
+        "volume": 511575,
         "date": "2026-11-03",
-        "change": -1.39,
-        "change_pct": -1.33,
+        "change": -1.17,
+        "change_pct": -1.12,
         "daily_bars": [
           {
             "date": "2026-08-12",
@@ -177814,8 +177774,8 @@
             "low": 88.1,
             "close": 88.98,
             "volume": 274843,
-            "change": 0.07,
-            "change_pct": 0.08
+            "change": 0.0,
+            "change_pct": 0.0
           },
           {
             "date": "2026-08-13",
@@ -178399,13 +178359,13 @@
           },
           {
             "date": "2026-11-03",
-            "open": 105.32,
+            "open": 104.45,
             "high": 107.24,
             "low": 100.8,
-            "close": 103.38,
-            "volume": 395365,
-            "change": -1.39,
-            "change_pct": -1.33
+            "close": 103.6,
+            "volume": 511575,
+            "change": -1.17,
+            "change_pct": -1.12
           }
         ],
         "intraday_bars": [
@@ -179181,13 +179141,13 @@
         "recent_5d": [
           {
             "date": "2026-11-03",
-            "open": 105.32,
+            "open": 104.45,
             "high": 107.24,
             "low": 100.8,
-            "close": 103.38,
-            "volume": 395365,
-            "change": -1.39,
-            "change_pct": -1.33
+            "close": 103.6,
+            "volume": 511575,
+            "change": -1.17,
+            "change_pct": -1.12
           },
           {
             "date": "2026-11-02",
@@ -218179,14 +218139,14 @@
   "brent": {
     "symbol": "@LCO.1",
     "name": "布蘭特原油期貨 (Brent Crude)",
-    "last": 103.38,
-    "open": 105.32,
+    "last": 103.6,
+    "open": 104.45,
     "high": 107.24,
     "low": 100.8,
-    "volume": 395365,
+    "volume": 511575,
     "date": "2026-11-03",
-    "change": -1.39,
-    "change_pct": -1.33,
+    "change": -1.17,
+    "change_pct": -1.12,
     "daily_bars": [
       {
         "date": "2026-08-12",
@@ -218195,8 +218155,8 @@
         "low": 88.1,
         "close": 88.98,
         "volume": 274843,
-        "change": 0.07,
-        "change_pct": 0.08
+        "change": 0.0,
+        "change_pct": 0.0
       },
       {
         "date": "2026-08-13",
@@ -218780,13 +218740,13 @@
       },
       {
         "date": "2026-11-03",
-        "open": 105.32,
+        "open": 104.45,
         "high": 107.24,
         "low": 100.8,
-        "close": 103.38,
-        "volume": 395365,
-        "change": -1.39,
-        "change_pct": -1.33
+        "close": 103.6,
+        "volume": 511575,
+        "change": -1.17,
+        "change_pct": -1.12
       }
     ],
     "intraday_bars": [
@@ -219562,13 +219522,13 @@
     "recent_5d": [
       {
         "date": "2026-11-03",
-        "open": 105.32,
+        "open": 104.45,
         "high": 107.24,
         "low": 100.8,
-        "close": 103.38,
-        "volume": 395365,
-        "change": -1.39,
-        "change_pct": -1.33
+        "close": 103.6,
+        "volume": 511575,
+        "change": -1.17,
+        "change_pct": -1.12
       },
       {
         "date": "2026-11-02",
