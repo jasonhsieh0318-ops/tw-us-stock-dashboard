@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-11-05 05:45:23",
+  "updated_at": "2026-11-05 05:50:15",
   "twse_updated_at": "2026-11-04 19:57:08",
-  "global_updated_at": "2026-11-05 05:45:23",
+  "global_updated_at": "2026-11-05 05:50:15",
   "futures_updated_at": "2026-11-05 04:48:28",
   "twse_date": "2026-11-04",
   "twse_date_raw": "20261104",
@@ -26553,9 +26553,9 @@
             "time": "11/04 16:30",
             "open": 95.08,
             "high": 95.1,
-            "low": 94.81,
-            "close": 94.84,
-            "volume": 550
+            "low": 94.66,
+            "close": 94.7,
+            "volume": 752
           }
         ],
         "recent_5d": [
@@ -27960,8 +27960,8 @@
             "open": 28633.5,
             "high": 28642.5,
             "low": 28616.75,
-            "close": 28639.25,
-            "volume": 1759
+            "close": 28633.25,
+            "volume": 2209
           }
         ],
         "recent_5d": [
@@ -34662,7 +34662,7 @@
                 "high": 435.71,
                 "low": 426.8,
                 "close": 430.97,
-                "volume": 9366513,
+                "volume": 9479386,
                 "change": 4.62,
                 "change_pct": 1.08
               },
@@ -35102,7 +35102,7 @@
                 "high": 427.1599,
                 "low": 415.5001,
                 "close": 420.22,
-                "volume": 12353836,
+                "volume": 12174940,
                 "change": 7.61,
                 "change_pct": 1.84
               },
@@ -35953,8 +35953,8 @@
                 "open": 397.0,
                 "high": 397.1997,
                 "low": 396.69,
-                "close": 397.0,
-                "volume": 1884
+                "close": 396.81,
+                "volume": 3914
               }
             ],
             "code": "TSM",
@@ -36067,7 +36067,7 @@
                 "high": 40.29,
                 "low": 38.7,
                 "close": 39.91,
-                "volume": 7176165,
+                "volume": 7162099,
                 "change": 0.37,
                 "change_pct": 0.94
               },
@@ -36507,7 +36507,7 @@
                 "high": 41.6499,
                 "low": 40.375,
                 "close": 40.8,
-                "volume": 7351099,
+                "volume": 7368476,
                 "change": 1.27,
                 "change_pct": 3.21
               },
@@ -38699,7 +38699,7 @@
                 "high": 24.71,
                 "low": 23.88,
                 "close": 24.61,
-                "volume": 28981908,
+                "volume": 30094936,
                 "change": 0.14,
                 "change_pct": 0.57
               },
@@ -38909,7 +38909,7 @@
                 "high": 20.5994,
                 "low": 19.97,
                 "close": 20.08,
-                "volume": 8358023,
+                "volume": 8353424,
                 "change": 0.26,
                 "change_pct": 1.31
               },
@@ -66426,9 +66426,9 @@
             "time": "11/04 16:30",
             "open": 95.08,
             "high": 95.1,
-            "low": 94.81,
-            "close": 94.84,
-            "volume": 550
+            "low": 94.66,
+            "close": 94.7,
+            "volume": 752
           }
         ],
         "recent_5d": [
@@ -67843,8 +67843,8 @@
             "open": 28633.5,
             "high": 28642.5,
             "low": 28616.75,
-            "close": 28639.25,
-            "volume": 1759
+            "close": 28633.25,
+            "volume": 2209
           }
         ],
         "recent_5d": [
@@ -73061,7 +73061,7 @@
                 "high": 435.71,
                 "low": 426.8,
                 "close": 430.97,
-                "volume": 9366513,
+                "volume": 9479386,
                 "change": 4.62,
                 "change_pct": 1.08
               },
@@ -73501,7 +73501,7 @@
                 "high": 427.1599,
                 "low": 415.5001,
                 "close": 420.22,
-                "volume": 12353836,
+                "volume": 12174940,
                 "change": 7.61,
                 "change_pct": 1.84
               },
@@ -74362,8 +74362,8 @@
                 "open": 397.0,
                 "high": 397.1997,
                 "low": 396.69,
-                "close": 397.0,
-                "volume": 1884
+                "close": 396.81,
+                "volume": 3914
               }
             ],
             "code": "TSM",
@@ -74476,7 +74476,7 @@
                 "high": 40.29,
                 "low": 38.7,
                 "close": 39.91,
-                "volume": 7176165,
+                "volume": 7162099,
                 "change": 0.37,
                 "change_pct": 0.94
               },
@@ -74916,7 +74916,7 @@
                 "high": 41.6499,
                 "low": 40.375,
                 "close": 40.8,
-                "volume": 7351099,
+                "volume": 7368476,
                 "change": 1.27,
                 "change_pct": 3.21
               },
@@ -76840,7 +76840,7 @@
                 "high": 24.71,
                 "low": 23.88,
                 "close": 24.61,
-                "volume": 28981908,
+                "volume": 30094936,
                 "change": 0.14,
                 "change_pct": 0.57
               },
@@ -77050,7 +77050,7 @@
                 "high": 20.5994,
                 "low": 19.97,
                 "close": 20.08,
-                "volume": 8358023,
+                "volume": 8353424,
                 "change": 0.26,
                 "change_pct": 1.31
               },
@@ -109459,7 +109459,7 @@
                 "high": 435.71,
                 "low": 426.8,
                 "close": 430.97,
-                "volume": 9366513,
+                "volume": 9479386,
                 "change": 4.62,
                 "change_pct": 1.08
               },
@@ -109899,7 +109899,7 @@
                 "high": 427.1599,
                 "low": 415.5001,
                 "close": 420.22,
-                "volume": 12353836,
+                "volume": 12174940,
                 "change": 7.61,
                 "change_pct": 1.84
               },
@@ -110420,7 +110420,7 @@
                 "high": 40.29,
                 "low": 38.7,
                 "close": 39.91,
-                "volume": 7176165,
+                "volume": 7162099,
                 "change": 0.37,
                 "change_pct": 0.94
               },
@@ -110860,7 +110860,7 @@
                 "high": 41.6499,
                 "low": 40.375,
                 "close": 40.8,
-                "volume": 7351099,
+                "volume": 7368476,
                 "change": 1.27,
                 "change_pct": 3.21
               },
@@ -112428,7 +112428,7 @@
                 "high": 24.71,
                 "low": 23.88,
                 "close": 24.61,
-                "volume": 28981908,
+                "volume": 30094936,
                 "change": 0.14,
                 "change_pct": 0.57
               },
@@ -112638,7 +112638,7 @@
                 "high": 20.5994,
                 "low": 19.97,
                 "close": 20.08,
-                "volume": 8358023,
+                "volume": 8353424,
                 "change": 0.26,
                 "change_pct": 1.31
               },
@@ -147034,7 +147034,7 @@
                 "high": 435.71,
                 "low": 426.8,
                 "close": 430.97,
-                "volume": 9366513,
+                "volume": 9479386,
                 "change": 4.62,
                 "change_pct": 1.08
               },
@@ -147474,7 +147474,7 @@
                 "high": 427.1599,
                 "low": 415.5001,
                 "close": 420.22,
-                "volume": 12353836,
+                "volume": 12174940,
                 "change": 7.61,
                 "change_pct": 1.84
               },
@@ -148261,7 +148261,7 @@
                 "high": 40.29,
                 "low": 38.7,
                 "close": 39.91,
-                "volume": 7176165,
+                "volume": 7162099,
                 "change": 0.37,
                 "change_pct": 0.94
               },
@@ -148701,7 +148701,7 @@
                 "high": 41.6499,
                 "low": 40.375,
                 "close": 40.8,
-                "volume": 7351099,
+                "volume": 7368476,
                 "change": 1.27,
                 "change_pct": 3.21
               },
@@ -150641,7 +150641,7 @@
                 "high": 24.71,
                 "low": 23.88,
                 "close": 24.61,
-                "volume": 28981908,
+                "volume": 30094936,
                 "change": 0.14,
                 "change_pct": 0.57
               },
@@ -150851,7 +150851,7 @@
                 "high": 20.5994,
                 "low": 19.97,
                 "close": 20.08,
-                "volume": 8358023,
+                "volume": 8353424,
                 "change": 0.26,
                 "change_pct": 1.31
               },
@@ -176986,14 +176986,14 @@
       "brent": {
         "symbol": "@LCO.1",
         "name": "布蘭特原油期貨 (Brent Crude)",
-        "last": 94.84,
+        "last": 94.7,
         "open": 103.57,
         "high": 104.58,
         "low": 93.22,
-        "volume": 462286,
+        "volume": 462488,
         "date": "2026-11-04",
-        "change": -8.76,
-        "change_pct": -8.46,
+        "change": -8.9,
+        "change_pct": -8.59,
         "daily_bars": [
           {
             "date": "2026-08-13",
@@ -177590,10 +177590,10 @@
             "open": 103.57,
             "high": 104.58,
             "low": 93.22,
-            "close": 94.84,
-            "volume": 462286,
-            "change": -8.76,
-            "change_pct": -8.46
+            "close": 94.7,
+            "volume": 462488,
+            "change": -8.9,
+            "change_pct": -8.59
           }
         ],
         "intraday_bars": [
@@ -178361,9 +178361,9 @@
             "time": "11/04 16:30",
             "open": 95.08,
             "high": 95.1,
-            "low": 94.81,
-            "close": 94.84,
-            "volume": 550
+            "low": 94.66,
+            "close": 94.7,
+            "volume": 752
           }
         ],
         "recent_5d": [
@@ -178372,10 +178372,10 @@
             "open": 103.57,
             "high": 104.58,
             "low": 93.22,
-            "close": 94.84,
-            "volume": 462286,
-            "change": -8.76,
-            "change_pct": -8.46
+            "close": 94.7,
+            "volume": 462488,
+            "change": -8.9,
+            "change_pct": -8.59
           },
           {
             "date": "2026-11-03",
@@ -178422,14 +178422,14 @@
       "nq": {
         "symbol": "@ND.1",
         "name": "小那斯達克期貨 (E-mini Nasdaq-100)",
-        "last": 28639.25,
+        "last": 28633.25,
         "open": 27935.75,
         "high": 28969.0,
         "low": 27921.0,
-        "volume": 834507,
+        "volume": 834957,
         "date": "2026-11-04",
-        "change": 333.5,
-        "change_pct": 1.18,
+        "change": 327.5,
+        "change_pct": 1.16,
         "daily_bars": [
           {
             "date": "2026-08-12",
@@ -179026,10 +179026,10 @@
             "open": 27935.75,
             "high": 28969.0,
             "low": 27921.0,
-            "close": 28639.25,
-            "volume": 834507,
-            "change": 333.5,
-            "change_pct": 1.18
+            "close": 28633.25,
+            "volume": 834957,
+            "change": 327.5,
+            "change_pct": 1.16
           }
         ],
         "intraday_bars": [
@@ -179798,8 +179798,8 @@
             "open": 28633.5,
             "high": 28642.5,
             "low": 28616.75,
-            "close": 28639.25,
-            "volume": 1759
+            "close": 28633.25,
+            "volume": 2209
           }
         ],
         "recent_5d": [
@@ -179808,10 +179808,10 @@
             "open": 27935.75,
             "high": 28969.0,
             "low": 27921.0,
-            "close": 28639.25,
-            "volume": 834507,
-            "change": 333.5,
-            "change_pct": 1.18
+            "close": 28633.25,
+            "volume": 834957,
+            "change": 327.5,
+            "change_pct": 1.16
           },
           {
             "date": "2026-11-03",
@@ -186685,14 +186685,14 @@
           {
             "symbol": "TSM",
             "name": "台積電 ADR",
-            "last": 397.0,
+            "last": 396.81,
             "open": 403.26,
             "high": 412.5,
             "low": 391.61,
-            "volume": 41393322,
+            "volume": 41395352,
             "date": "2026-11-04",
-            "change": -7.8,
-            "change_pct": -1.93,
+            "change": -7.99,
+            "change_pct": -1.97,
             "daily_bars": [
               {
                 "date": "2026-08-12",
@@ -186730,7 +186730,7 @@
                 "high": 435.71,
                 "low": 426.8,
                 "close": 430.97,
-                "volume": 9366513,
+                "volume": 9479386,
                 "change": 4.62,
                 "change_pct": 1.08
               },
@@ -187170,7 +187170,7 @@
                 "high": 427.1599,
                 "low": 415.5001,
                 "close": 420.22,
-                "volume": 12353836,
+                "volume": 12174940,
                 "change": 7.61,
                 "change_pct": 1.84
               },
@@ -187289,10 +187289,10 @@
                 "open": 403.26,
                 "high": 412.5,
                 "low": 391.61,
-                "close": 397.0,
-                "volume": 41393322,
-                "change": -7.8,
-                "change_pct": -1.93
+                "close": 396.81,
+                "volume": 41395352,
+                "change": -7.99,
+                "change_pct": -1.97
               }
             ],
             "intraday_bars": [
@@ -188061,8 +188061,8 @@
                 "open": 397.0,
                 "high": 397.1997,
                 "low": 396.69,
-                "close": 397.0,
-                "volume": 1884
+                "close": 396.81,
+                "volume": 3914
               }
             ],
             "code": "TSM",
@@ -188072,18 +188072,18 @@
             "tw_change_pct": -1.53,
             "ratio": 5.0,
             "usd_twd": 32.804,
-            "implied_tw_price": 2604.64,
-            "premium_pct": 15.25,
+            "implied_tw_price": 2603.39,
+            "premium_pct": 15.19,
             "recent_5d": [
               {
                 "date": "2026-11-04",
                 "open": 403.26,
                 "high": 412.5,
                 "low": 391.61,
-                "close": 397.0,
-                "volume": 41393322,
-                "change": -7.8,
-                "change_pct": -1.93
+                "close": 396.81,
+                "volume": 41395352,
+                "change": -7.99,
+                "change_pct": -1.97
               },
               {
                 "date": "2026-11-03",
@@ -188175,7 +188175,7 @@
                 "high": 40.29,
                 "low": 38.7,
                 "close": 39.91,
-                "volume": 7176165,
+                "volume": 7162099,
                 "change": 0.37,
                 "change_pct": 0.94
               },
@@ -188615,7 +188615,7 @@
                 "high": 41.6499,
                 "low": 40.375,
                 "close": 40.8,
-                "volume": 7351099,
+                "volume": 7368476,
                 "change": 1.27,
                 "change_pct": 3.21
               },
@@ -190887,7 +190887,7 @@
                 "high": 24.71,
                 "low": 23.88,
                 "close": 24.61,
-                "volume": 28981908,
+                "volume": 30094936,
                 "change": 0.14,
                 "change_pct": 0.57
               },
@@ -191097,7 +191097,7 @@
                 "high": 20.5994,
                 "low": 19.97,
                 "close": 20.08,
-                "volume": 8358023,
+                "volume": 8353424,
                 "change": 0.26,
                 "change_pct": 1.31
               },
@@ -217365,14 +217365,14 @@
   "brent": {
     "symbol": "@LCO.1",
     "name": "布蘭特原油期貨 (Brent Crude)",
-    "last": 94.84,
+    "last": 94.7,
     "open": 103.57,
     "high": 104.58,
     "low": 93.22,
-    "volume": 462286,
+    "volume": 462488,
     "date": "2026-11-04",
-    "change": -8.76,
-    "change_pct": -8.46,
+    "change": -8.9,
+    "change_pct": -8.59,
     "daily_bars": [
       {
         "date": "2026-08-13",
@@ -217969,10 +217969,10 @@
         "open": 103.57,
         "high": 104.58,
         "low": 93.22,
-        "close": 94.84,
-        "volume": 462286,
-        "change": -8.76,
-        "change_pct": -8.46
+        "close": 94.7,
+        "volume": 462488,
+        "change": -8.9,
+        "change_pct": -8.59
       }
     ],
     "intraday_bars": [
@@ -218740,9 +218740,9 @@
         "time": "11/04 16:30",
         "open": 95.08,
         "high": 95.1,
-        "low": 94.81,
-        "close": 94.84,
-        "volume": 550
+        "low": 94.66,
+        "close": 94.7,
+        "volume": 752
       }
     ],
     "recent_5d": [
@@ -218751,10 +218751,10 @@
         "open": 103.57,
         "high": 104.58,
         "low": 93.22,
-        "close": 94.84,
-        "volume": 462286,
-        "change": -8.76,
-        "change_pct": -8.46
+        "close": 94.7,
+        "volume": 462488,
+        "change": -8.9,
+        "change_pct": -8.59
       },
       {
         "date": "2026-11-03",
@@ -218801,14 +218801,14 @@
   "nq": {
     "symbol": "@ND.1",
     "name": "小那斯達克期貨 (E-mini Nasdaq-100)",
-    "last": 28639.25,
+    "last": 28633.25,
     "open": 27935.75,
     "high": 28969.0,
     "low": 27921.0,
-    "volume": 834507,
+    "volume": 834957,
     "date": "2026-11-04",
-    "change": 333.5,
-    "change_pct": 1.18,
+    "change": 327.5,
+    "change_pct": 1.16,
     "daily_bars": [
       {
         "date": "2026-08-12",
@@ -219405,10 +219405,10 @@
         "open": 27935.75,
         "high": 28969.0,
         "low": 27921.0,
-        "close": 28639.25,
-        "volume": 834507,
-        "change": 333.5,
-        "change_pct": 1.18
+        "close": 28633.25,
+        "volume": 834957,
+        "change": 327.5,
+        "change_pct": 1.16
       }
     ],
     "intraday_bars": [
@@ -220177,8 +220177,8 @@
         "open": 28633.5,
         "high": 28642.5,
         "low": 28616.75,
-        "close": 28639.25,
-        "volume": 1759
+        "close": 28633.25,
+        "volume": 2209
       }
     ],
     "recent_5d": [
@@ -220187,10 +220187,10 @@
         "open": 27935.75,
         "high": 28969.0,
         "low": 27921.0,
-        "close": 28639.25,
-        "volume": 834507,
-        "change": 333.5,
-        "change_pct": 1.18
+        "close": 28633.25,
+        "volume": 834957,
+        "change": 327.5,
+        "change_pct": 1.16
       },
       {
         "date": "2026-11-03",
@@ -227064,14 +227064,14 @@
       {
         "symbol": "TSM",
         "name": "台積電 ADR",
-        "last": 397.0,
+        "last": 396.81,
         "open": 403.26,
         "high": 412.5,
         "low": 391.61,
-        "volume": 41393322,
+        "volume": 41395352,
         "date": "2026-11-04",
-        "change": -7.8,
-        "change_pct": -1.93,
+        "change": -7.99,
+        "change_pct": -1.97,
         "daily_bars": [
           {
             "date": "2026-08-12",
@@ -227109,7 +227109,7 @@
             "high": 435.71,
             "low": 426.8,
             "close": 430.97,
-            "volume": 9366513,
+            "volume": 9479386,
             "change": 4.62,
             "change_pct": 1.08
           },
@@ -227549,7 +227549,7 @@
             "high": 427.1599,
             "low": 415.5001,
             "close": 420.22,
-            "volume": 12353836,
+            "volume": 12174940,
             "change": 7.61,
             "change_pct": 1.84
           },
@@ -227668,10 +227668,10 @@
             "open": 403.26,
             "high": 412.5,
             "low": 391.61,
-            "close": 397.0,
-            "volume": 41393322,
-            "change": -7.8,
-            "change_pct": -1.93
+            "close": 396.81,
+            "volume": 41395352,
+            "change": -7.99,
+            "change_pct": -1.97
           }
         ],
         "intraday_bars": [
@@ -228440,8 +228440,8 @@
             "open": 397.0,
             "high": 397.1997,
             "low": 396.69,
-            "close": 397.0,
-            "volume": 1884
+            "close": 396.81,
+            "volume": 3914
           }
         ],
         "code": "TSM",
@@ -228459,13 +228459,13 @@
             "open": 403.26,
             "high": 412.5,
             "low": 391.61,
-            "close": 397.0,
-            "volume": 41393322,
-            "change": -7.8,
-            "change_pct": -1.93,
-            "implied_tw_price": 2604.64,
+            "close": 396.81,
+            "volume": 41395352,
+            "change": -7.99,
+            "change_pct": -1.97,
+            "implied_tw_price": 2603.39,
             "tw_close": 2260.0,
-            "premium_pct": 15.25
+            "premium_pct": 15.19
           },
           {
             "date": "2026-11-03",
@@ -228569,7 +228569,7 @@
             "high": 40.29,
             "low": 38.7,
             "close": 39.91,
-            "volume": 7176165,
+            "volume": 7162099,
             "change": 0.37,
             "change_pct": 0.94
           },
@@ -229009,7 +229009,7 @@
             "high": 41.6499,
             "low": 40.375,
             "close": 40.8,
-            "volume": 7351099,
+            "volume": 7368476,
             "change": 1.27,
             "change_pct": 3.21
           },
@@ -231311,7 +231311,7 @@
             "high": 24.71,
             "low": 23.88,
             "close": 24.61,
-            "volume": 28981908,
+            "volume": 30094936,
             "change": 0.14,
             "change_pct": 0.57
           },
@@ -231521,7 +231521,7 @@
             "high": 20.5994,
             "low": 19.97,
             "close": 20.08,
-            "volume": 8358023,
+            "volume": 8353424,
             "change": 0.26,
             "change_pct": 1.31
           },
