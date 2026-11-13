@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-11-14 05:43:28",
+  "updated_at": "2026-11-14 05:49:41",
   "twse_updated_at": "2026-11-13 19:51:25",
-  "global_updated_at": "2026-11-14 05:43:28",
+  "global_updated_at": "2026-11-14 05:49:41",
   "futures_updated_at": "2026-11-14 04:49:29",
   "twse_date": "2026-11-13",
   "twse_date_raw": "20261113",
@@ -34412,7 +34412,7 @@
                 "high": 37.765,
                 "low": 36.7,
                 "close": 36.95,
-                "volume": 4191153,
+                "volume": 4192267,
                 "change": -0.83,
                 "change_pct": -2.2
               },
@@ -34542,7 +34542,7 @@
                 "high": 41.63,
                 "low": 39.975,
                 "close": 41.63,
-                "volume": 19277728,
+                "volume": 19159948,
                 "change": 1.64,
                 "change_pct": 4.1
               },
@@ -34892,7 +34892,7 @@
                 "high": 32.53,
                 "low": 30.815,
                 "close": 31.63,
-                "volume": 12897800,
+                "volume": 13593458,
                 "change": 1.91,
                 "change_pct": 6.43
               },
@@ -35673,8 +35673,8 @@
                 "open": 35.1248,
                 "high": 35.2,
                 "low": 34.9038,
-                "close": 34.9038,
-                "volume": 10247
+                "close": 34.9254,
+                "volume": 10437
               }
             ],
             "code": "ASX",
@@ -35703,7 +35703,7 @@
                 "high": 32.53,
                 "low": 30.815,
                 "close": 31.63,
-                "volume": 12897800,
+                "volume": 13593458,
                 "change": 1.91,
                 "change_pct": 6.43
               },
@@ -73129,7 +73129,7 @@
                 "high": 37.765,
                 "low": 36.7,
                 "close": 36.95,
-                "volume": 4191153,
+                "volume": 4192267,
                 "change": -0.83,
                 "change_pct": -2.2
               },
@@ -73259,7 +73259,7 @@
                 "high": 41.63,
                 "low": 39.975,
                 "close": 41.63,
-                "volume": 19277728,
+                "volume": 19159948,
                 "change": 1.64,
                 "change_pct": 4.1
               },
@@ -73609,7 +73609,7 @@
                 "high": 32.53,
                 "low": 30.815,
                 "close": 31.63,
-                "volume": 12897800,
+                "volume": 13593458,
                 "change": 1.91,
                 "change_pct": 6.43
               },
@@ -74400,8 +74400,8 @@
                 "open": 35.1248,
                 "high": 35.2,
                 "low": 34.9038,
-                "close": 34.9038,
-                "volume": 10247
+                "close": 34.9254,
+                "volume": 10437
               }
             ],
             "code": "ASX",
@@ -74440,7 +74440,7 @@
                 "high": 32.53,
                 "low": 30.815,
                 "close": 31.63,
-                "volume": 12897800,
+                "volume": 13593458,
                 "change": 1.91,
                 "change_pct": 6.43
               },
@@ -110351,7 +110351,7 @@
                 "high": 37.765,
                 "low": 36.7,
                 "close": 36.95,
-                "volume": 4191153,
+                "volume": 4192267,
                 "change": -0.83,
                 "change_pct": -2.2
               },
@@ -110481,7 +110481,7 @@
                 "high": 41.63,
                 "low": 39.975,
                 "close": 41.63,
-                "volume": 19277728,
+                "volume": 19159948,
                 "change": 1.64,
                 "change_pct": 4.1
               },
@@ -110831,7 +110831,7 @@
                 "high": 32.53,
                 "low": 30.815,
                 "close": 31.63,
-                "volume": 12897800,
+                "volume": 13593458,
                 "change": 1.91,
                 "change_pct": 6.43
               },
@@ -111218,7 +111218,7 @@
                 "high": 32.53,
                 "low": 30.815,
                 "close": 31.63,
-                "volume": 12897800,
+                "volume": 13593458,
                 "change": 1.91,
                 "change_pct": 6.43
               },
@@ -149293,7 +149293,7 @@
                 "high": 37.765,
                 "low": 36.7,
                 "close": 36.95,
-                "volume": 4191153,
+                "volume": 4192267,
                 "change": -0.83,
                 "change_pct": -2.2
               },
@@ -149423,7 +149423,7 @@
                 "high": 41.63,
                 "low": 39.975,
                 "close": 41.63,
-                "volume": 19277728,
+                "volume": 19159948,
                 "change": 1.64,
                 "change_pct": 4.1
               },
@@ -149773,7 +149773,7 @@
                 "high": 32.53,
                 "low": 30.815,
                 "close": 31.63,
-                "volume": 12897800,
+                "volume": 13593458,
                 "change": 1.91,
                 "change_pct": 6.43
               },
@@ -150436,7 +150436,7 @@
                 "high": 32.53,
                 "low": 30.815,
                 "close": 31.63,
-                "volume": 12897800,
+                "volume": 13593458,
                 "change": 1.91,
                 "change_pct": 6.43
               }
@@ -182276,6 +182276,14 @@
                 "low": 52346.6,
                 "close": 52347.55,
                 "volume": 0
+              },
+              {
+                "time": "11/13 16:30",
+                "open": 52347.55,
+                "high": 52347.55,
+                "low": 52347.55,
+                "close": 52347.55,
+                "volume": 0
               }
             ],
             "code": "DJI",
@@ -184869,6 +184877,14 @@
                 "time": "11/13 16:00",
                 "open": 7562.57,
                 "high": 7562.57,
+                "low": 7561.67,
+                "close": 7561.67,
+                "volume": 0
+              },
+              {
+                "time": "11/13 16:30",
+                "open": 7561.67,
+                "high": 7561.67,
                 "low": 7561.67,
                 "close": 7561.67,
                 "volume": 0
@@ -190159,14 +190175,14 @@
           {
             "symbol": "ASX",
             "name": "日月光 ADR",
-            "last": 34.9038,
+            "last": 34.9254,
             "open": 36.3,
             "high": 37.39,
             "low": 34.46,
-            "volume": 5766939,
+            "volume": 5767129,
             "date": "2026-11-13",
-            "change": -1.39,
-            "change_pct": -3.83,
+            "change": -1.36,
+            "change_pct": -3.75,
             "daily_bars": [
               {
                 "date": "2026-08-21",
@@ -190234,7 +190250,7 @@
                 "high": 37.765,
                 "low": 36.7,
                 "close": 36.95,
-                "volume": 4191153,
+                "volume": 4192267,
                 "change": -0.83,
                 "change_pct": -2.2
               },
@@ -190364,7 +190380,7 @@
                 "high": 41.63,
                 "low": 39.975,
                 "close": 41.63,
-                "volume": 19277728,
+                "volume": 19159948,
                 "change": 1.64,
                 "change_pct": 4.1
               },
@@ -190714,7 +190730,7 @@
                 "high": 32.53,
                 "low": 30.815,
                 "close": 31.63,
-                "volume": 12897800,
+                "volume": 13593458,
                 "change": 1.91,
                 "change_pct": 6.43
               },
@@ -190763,10 +190779,10 @@
                 "open": 36.3,
                 "high": 37.39,
                 "low": 34.46,
-                "close": 34.9038,
-                "volume": 5766939,
-                "change": -1.39,
-                "change_pct": -3.83
+                "close": 34.9254,
+                "volume": 5767129,
+                "change": -1.36,
+                "change_pct": -3.75
               }
             ],
             "intraday_bars": [
@@ -191535,8 +191551,8 @@
                 "open": 35.1248,
                 "high": 35.2,
                 "low": 34.9038,
-                "close": 34.9038,
-                "volume": 10247
+                "close": 34.9254,
+                "volume": 10437
               }
             ],
             "code": "ASX",
@@ -191546,18 +191562,18 @@
             "tw_change_pct": 2.05,
             "ratio": 2.0,
             "usd_twd": 32.981,
-            "implied_tw_price": 575.58,
-            "premium_pct": -3.75,
+            "implied_tw_price": 575.94,
+            "premium_pct": -3.69,
             "recent_5d": [
               {
                 "date": "2026-11-13",
                 "open": 36.3,
                 "high": 37.39,
                 "low": 34.46,
-                "close": 34.9038,
-                "volume": 5766939,
-                "change": -1.39,
-                "change_pct": -3.83
+                "close": 34.9254,
+                "volume": 5767129,
+                "change": -1.36,
+                "change_pct": -3.75
               },
               {
                 "date": "2026-11-12",
@@ -223671,6 +223687,14 @@
             "low": 52346.6,
             "close": 52347.55,
             "volume": 0
+          },
+          {
+            "time": "11/13 16:30",
+            "open": 52347.55,
+            "high": 52347.55,
+            "low": 52347.55,
+            "close": 52347.55,
+            "volume": 0
           }
         ],
         "code": "DJI",
@@ -226264,6 +226288,14 @@
             "time": "11/13 16:00",
             "open": 7562.57,
             "high": 7562.57,
+            "low": 7561.67,
+            "close": 7561.67,
+            "volume": 0
+          },
+          {
+            "time": "11/13 16:30",
+            "open": 7561.67,
+            "high": 7561.67,
             "low": 7561.67,
             "close": 7561.67,
             "volume": 0
@@ -231569,14 +231601,14 @@
       {
         "symbol": "ASX",
         "name": "日月光 ADR",
-        "last": 34.9038,
+        "last": 34.9254,
         "open": 36.3,
         "high": 37.39,
         "low": 34.46,
-        "volume": 5766939,
+        "volume": 5767129,
         "date": "2026-11-13",
-        "change": -1.39,
-        "change_pct": -3.83,
+        "change": -1.36,
+        "change_pct": -3.75,
         "daily_bars": [
           {
             "date": "2026-08-21",
@@ -231644,7 +231676,7 @@
             "high": 37.765,
             "low": 36.7,
             "close": 36.95,
-            "volume": 4191153,
+            "volume": 4192267,
             "change": -0.83,
             "change_pct": -2.2
           },
@@ -231774,7 +231806,7 @@
             "high": 41.63,
             "low": 39.975,
             "close": 41.63,
-            "volume": 19277728,
+            "volume": 19159948,
             "change": 1.64,
             "change_pct": 4.1
           },
@@ -232124,7 +232156,7 @@
             "high": 32.53,
             "low": 30.815,
             "close": 31.63,
-            "volume": 12897800,
+            "volume": 13593458,
             "change": 1.91,
             "change_pct": 6.43
           },
@@ -232173,10 +232205,10 @@
             "open": 36.3,
             "high": 37.39,
             "low": 34.46,
-            "close": 34.9038,
-            "volume": 5766939,
-            "change": -1.39,
-            "change_pct": -3.83
+            "close": 34.9254,
+            "volume": 5767129,
+            "change": -1.36,
+            "change_pct": -3.75
           }
         ],
         "intraday_bars": [
@@ -232945,8 +232977,8 @@
             "open": 35.1248,
             "high": 35.2,
             "low": 34.9038,
-            "close": 34.9038,
-            "volume": 10247
+            "close": 34.9254,
+            "volume": 10437
           }
         ],
         "code": "ASX",
@@ -232964,13 +232996,13 @@
             "open": 36.3,
             "high": 37.39,
             "low": 34.46,
-            "close": 34.9038,
-            "volume": 5766939,
-            "change": -1.39,
-            "change_pct": -3.83,
-            "implied_tw_price": 575.58,
+            "close": 34.9254,
+            "volume": 5767129,
+            "change": -1.36,
+            "change_pct": -3.75,
+            "implied_tw_price": 575.94,
             "tw_close": 598.0,
-            "premium_pct": -3.75
+            "premium_pct": -3.69
           },
           {
             "date": "2026-11-12",
