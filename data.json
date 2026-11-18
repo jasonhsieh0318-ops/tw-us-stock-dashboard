@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-11-19 05:49:50",
+  "updated_at": "2026-11-19 05:54:36",
   "twse_updated_at": "2026-11-18 19:55:34",
-  "global_updated_at": "2026-11-19 05:49:50",
+  "global_updated_at": "2026-11-19 05:54:36",
   "futures_updated_at": "2026-11-19 04:50:39",
   "twse_date": "2026-11-18",
   "twse_date_raw": "20261118",
@@ -37673,9 +37673,9 @@
                 "time": "11/18 16:30",
                 "open": 32.54,
                 "high": 32.54,
-                "low": 32.54,
-                "close": 32.54,
-                "volume": 124
+                "low": 32.46,
+                "close": 32.46,
+                "volume": 248
               }
             ],
             "code": "ASX",
@@ -76420,9 +76420,9 @@
                 "time": "11/18 16:30",
                 "open": 32.54,
                 "high": 32.54,
-                "low": 32.54,
-                "close": 32.54,
-                "volume": 124
+                "low": 32.46,
+                "close": 32.46,
+                "volume": 248
               }
             ],
             "code": "ASX",
@@ -189797,14 +189797,14 @@
           {
             "symbol": "ASX",
             "name": "日月光 ADR",
-            "last": 32.54,
+            "last": 32.46,
             "open": 33.06,
             "high": 33.32,
             "low": 31.81,
-            "volume": 5732525,
+            "volume": 5732649,
             "date": "2026-11-18",
-            "change": 0.71,
-            "change_pct": 2.23,
+            "change": 0.63,
+            "change_pct": 1.98,
             "daily_bars": [
               {
                 "date": "2026-08-26",
@@ -190401,10 +190401,10 @@
                 "open": 33.06,
                 "high": 33.32,
                 "low": 31.81,
-                "close": 32.54,
-                "volume": 5732525,
-                "change": 0.71,
-                "change_pct": 2.23
+                "close": 32.46,
+                "volume": 5732649,
+                "change": 0.63,
+                "change_pct": 1.98
               }
             ],
             "intraday_bars": [
@@ -191172,9 +191172,9 @@
                 "time": "11/18 16:30",
                 "open": 32.54,
                 "high": 32.54,
-                "low": 32.54,
-                "close": 32.54,
-                "volume": 124
+                "low": 32.46,
+                "close": 32.46,
+                "volume": 248
               }
             ],
             "code": "ASX",
@@ -191184,18 +191184,18 @@
             "tw_change_pct": 5.38,
             "ratio": 2.0,
             "usd_twd": 32.901,
-            "implied_tw_price": 535.3,
-            "premium_pct": -2.32,
+            "implied_tw_price": 533.98,
+            "premium_pct": -2.56,
             "recent_5d": [
               {
                 "date": "2026-11-18",
                 "open": 33.06,
                 "high": 33.32,
                 "low": 31.81,
-                "close": 32.54,
-                "volume": 5732525,
-                "change": 0.71,
-                "change_pct": 2.23
+                "close": 32.46,
+                "volume": 5732649,
+                "change": 0.63,
+                "change_pct": 1.98
               },
               {
                 "date": "2026-11-17",
@@ -230433,14 +230433,14 @@
       {
         "symbol": "ASX",
         "name": "日月光 ADR",
-        "last": 32.54,
+        "last": 32.46,
         "open": 33.06,
         "high": 33.32,
         "low": 31.81,
-        "volume": 5732525,
+        "volume": 5732649,
         "date": "2026-11-18",
-        "change": 0.71,
-        "change_pct": 2.23,
+        "change": 0.63,
+        "change_pct": 1.98,
         "daily_bars": [
           {
             "date": "2026-08-26",
@@ -231037,10 +231037,10 @@
             "open": 33.06,
             "high": 33.32,
             "low": 31.81,
-            "close": 32.54,
-            "volume": 5732525,
-            "change": 0.71,
-            "change_pct": 2.23
+            "close": 32.46,
+            "volume": 5732649,
+            "change": 0.63,
+            "change_pct": 1.98
           }
         ],
         "intraday_bars": [
@@ -231808,9 +231808,9 @@
             "time": "11/18 16:30",
             "open": 32.54,
             "high": 32.54,
-            "low": 32.54,
-            "close": 32.54,
-            "volume": 124
+            "low": 32.46,
+            "close": 32.46,
+            "volume": 248
           }
         ],
         "code": "ASX",
@@ -231828,13 +231828,13 @@
             "open": 33.06,
             "high": 33.32,
             "low": 31.81,
-            "close": 32.54,
-            "volume": 5732525,
-            "change": 0.71,
-            "change_pct": 2.23,
-            "implied_tw_price": 535.3,
+            "close": 32.46,
+            "volume": 5732649,
+            "change": 0.63,
+            "change_pct": 1.98,
+            "implied_tw_price": 533.98,
             "tw_close": 548.0,
-            "premium_pct": -2.32
+            "premium_pct": -2.56
           },
           {
             "date": "2026-11-17",
